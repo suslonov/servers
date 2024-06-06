@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Instant CVI values from GVOL data</title>
+	<style type="text/css">
+	<!--
+	.style1 {color: #FF0000}
+	-->
+	table, th, td {
+	  border: 1px solid black;
+	  border-collapse: collapse;
+	}
+	</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Instant CVI values from GVOL data</h1>
+
+<table>
+	<tr>
+		{% for c in table_header %}
+			<td>{{c[0]}}</td>
+		{% endfor %}
+	</tr>
+	<tr>
+		{% for c in table_header %}
+			<td>{{c[1]}}</td>
+		{% endfor %}
+	</tr>
+	{% for i in df.index %}
+		<tr>
+			{% for v in df.loc[i] %}
+				<td>{{v}}</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+</table>
+
+</body>
+</html>

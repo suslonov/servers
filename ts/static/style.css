@@ -1,0 +1,158 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+td {
+	font-family: Arial, Helvetica, sans-serif;
+ 	word-wrap: break-word;
+}
+
+th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.ts_h1{
+	font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.ts_h2{
+	font-size: 22px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.linktosource{
+	font-size: 10px;
+	font-style:italic;
+}
+.rotate180 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.ts_submitbutton{
+	position:absolute;
+	top: 40px;
+	left: 840px;
+	font-size: 16px;
+	font-weight:bold;
+	height: 35px;
+	width: 90px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.ts_histogrambutton{
+	position:absolute;
+	top: 80px;
+	left: 840px;
+	font-size: 16px;
+	height: 35px;
+	width: 90px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.ts_clearbutton{
+	position:absolute;
+	top: 121px;
+	left: 360px;
+	font-size: 14px;
+	height: 24px;
+	width: 90px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.ts_about{
+	font-weight:bold;
+	color:#990000;
+    margin-top: 0px;
+    margin-bottom: 0px;
+	
+}
+.ts_textarea{
+	overflow-y: scroll;
+	vertical-align:middle;
+	width:850px;
+}
+.ts_text{
+	width:720px;
+}
+.ts_numeric{
+	width:200px;
+	text-align:right;
+}
+.ts_checkbox{
+}
+.ts_selectalg{
+	font-size:18px;
+}
+.ts_select{
+}
+.ts_parameter{
+	display:block;
+	padding-top:4px;
+	padding-bottom:4px;
+}
+.ts_parameter_list{
+	display: inline-block;
+	min-width:500px;
+	min-height:30px;
+	border-color:#5BA5FF;
+    border-style: solid;
+    border-width:thin;
+	border-radius: 3px;
+}
+.ts_parameter_list_text{
+	display: inline-block;
+	min-width:1006px;
+	min-height:30px;
+	border-color:#5BA5FF;
+    border-style: solid;
+    border-width:thin;
+	border-radius: 3px;
+}
+
+.api_textarea{
+	overflow-y: scroll;
+	vertical-align:top;
+	margin-top:6px;
+	margin-bottom:6px;
+}
+.api_text1{
+	vertical-align:top;
+	margin-top:6px;
+	margin-bottom:6px;
+}
+.api_text2{
+	vertical-align:top;
+	margin-top:6px;
+	margin-bottom:6px;
+}
+.api_select{
+	vertical-align:top;
+	margin-top:6px;
+	margin-bottom:6px;
+}
+.api_reply{
+	margin-top:6px;
+	margin-bottom:6px;
+	min-height:60px;
+}
+.api_send{
+	position:absolute;
+	top: 60px;
+	left: 1010px;
+	font-size: 12px;
+	height: 20px;
+	width: 40px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.api_slash{
+	vertical-align:top;
+	margin-top:6px;
+	margin-bottom:6px;
+	font-weight:bold;
+}

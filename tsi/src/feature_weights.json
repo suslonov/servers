@@ -1,0 +1,50 @@
+{
+    "regressed_feature_weights": {
+        "Age": 0.0485288500390966,
+        "Bachelor": 1.60164945210637,
+        "Bank_account": 0.693681878453187,
+        "Bank_reference": 0.707882538311047,
+        "Credit_card_holder": 0.114595394700692,
+        "Credit_history": 0.779671220830595,
+        "Elementary": 0.885699585637798,
+        "Employed": 2.05022625303396,
+        "Employment_other": 1.35835893538271,
+        "Occupation": 1.35835893538271,
+        "Has_license": 0.404429831195912,
+        "Have_grandchildren": 0.257918205247359,
+        "Income": 0.0000424257753213115,
+        "Income_source_declared": 0.720971471692614,
+        "Insurance": 0.414994517065026,
+        "Investor": 1.64239106301764,
+        "Phone": 0.947828722736928,
+        "Post_graduate": 1.77303646595269,
+        "Proof_of_residence": 1.12693374967786,
+        "Raising_children": 0.429218103005071,
+        "Relationship": 0.509883819090003,
+        "Secondary": 0.915735545963247,
+        "Site": 0.286982620111993,
+        "Social_network_account": 0.375654824572528,
+        "Stable_income": 0.938306950608658,
+        "Stake": 0.0000000129341049098912,
+        "ZIP_code": 0.644968913924933,
+        "Citizenship" : 1.0,
+		"Country" : 1.0
+    },
+    "Q2_feature_weights": {
+		"Industry": 5.0,
+		"Online_trade_history": 8.0,
+		"Credit_history": 4.0,
+		"Tax_return": 3.0
+    },
+    "Q3_feature_weights": {
+		"Constitution": 2.0,
+		"Industry": 4.0,
+		"Tax_return": 3.0,
+		"Auditing": 3.0,
+		"Online_trade_history": 6.0,
+		"Credit_history": 3.0,
+		"Rating": 6.0,
+		"Listing": 5.0,
+		"DB_report": 3.0
+    }
+}

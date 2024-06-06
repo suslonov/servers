@@ -1,0 +1,192 @@
+<!DOCTYPE html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href={{ url_for("static", filename = "style.css") }} />
+<title>TS toy prototype</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<form name="forminput" id="forminput" method="post" action="{{sub_path}}" onSubmit="return check_input();">
+<header>
+<table width="920px" border=0>
+  <tr>
+    <td>
+		<p class="ts_h1">Trust Score prototype</p>
+    </td>
+    <td align="right" valign="top">
+		<p class="ts_about"><a href="/static/about.html" target="_blank"><b>Readme</b></a>
+    </td>
+  </tr>
+</table>
+<table border=0>
+  <tr>
+    <td width="120px">
+	  <span class="ts_h2">Algorithm:</span>
+    </td>
+    <td width="110px">
+	  <select name="algname" id="algname" class="ts_selectalg">
+		{% for rr in algs %}
+		  {% if algname == rr[0] %}
+		    <option selected> {{rr[0]}} </option>
+		  {% else %}
+		    <option> {{rr[0]}} </option>
+          {% endif %}
+		{% endfor %}
+      </select>
+    </td>
+    <td>
+	    <span class="ts_h2">TS = {{ts}}</span>
+    </td>
+  </tr>
+</table>
+
+  <p><em>please enter your data for the Trust Score calculation</em>
+  <input name="Submit" id= "CalculateSubmit" type="submit" class="ts_submitbutton" value="Calculate"></p>
+  <input name="HistogramButton" id= "HistogramButton" type="submit" class="ts_histogrambutton" value="Histogram">
+  <table border=0>
+	  <tr>
+		<td>
+			User:
+		</td>
+		<td>
+			<input name="user_id" id="user_id" type="text" value="{{userid}}">
+		</td>
+	  </tr>
+  </table>
+<input name="Clear" id= "ClearButton" type="button" class="ts_clearbutton" value="Clear data" onClick="clear_data()">
+</header>
+
+  {% if row_list %}
+	  <section style="max-width:1060px">
+	  {% for r in row_list %}
+		{% if r[2]==0 or r[2]==25%}
+			{% if r[6]==1 %}
+				<section class="ts_parameter_list_text" style="background-color:#FFEFFF;">
+			{% elif r[6]==2 %}
+				<section class="ts_parameter_list_text" style="background-color:#FFFFD3;">
+			{% else %}
+				<section class="ts_parameter_list_text" style="background-color:#EAF9FF;">
+	 	    {% endif %}
+		{% else %}
+			{% if r[6]==1 %}
+				<section class="ts_parameter_list" style="background-color:#FFEFFF;">
+			{% elif r[6]==2 %}
+				<section class="ts_parameter_list" style="background-color:#FFFFD3;">
+			{% else %}
+				<section class="ts_parameter_list" style="background-color:#EAF9FF;">
+	 	    {% endif %}
+ 	    {% endif %}
+		    <div class="ts_parameter" title="{{r[5]}}">
+				{{r[4]}}
+				{% if r[2]==0%}
+				  <input name="row_{{r[1]}}" class="ts_text" id="row_{{r[1]}}" type="text" value="{{re[r[1]]}}" onChange="clear_sid()">
+				{% elif r[2]==1%}
+				  {% if re[r[1]] %}
+					<input name="row_{{r[1]}}" class="ts_checkbox" id="row_{{r[1]}}" type="checkbox" onChange="clear_sid()" checked >
+				  {% else %}
+					<input name="row_{{r[1]}}" class="ts_checkbox" id="row_{{r[1]}}" type="checkbox" onChange="clear_sid()">
+				  {% endif %}
+				{% elif r[2]==2%}
+				  <select name="row_{{r[1]}}" class="ts_select" id="row_{{r[1]}}" onChange="clear_sid()">
+					{% for rr in r[7] %}
+					  {% if re[r[1]] == rr[1] %}
+						<option selected> {{rr[1]}} </option>
+					  {% else %}
+						<option> {{rr[1]}} </option>
+					  {% endif %}
+					{% endfor %}
+				   </select>
+				{% elif r[2]==3%}
+				  <input name="row_{{r[1]}}" class="ts_numeric" id="row_{{r[1]}}" type="text" value="{{re[r[1]]}}" onChange="clear_sid()">
+				{% elif r[2]==4%}
+				  <input name="row_{{r[1]}}" class="ts_numeric" id="row_{{r[1]}}" type="text" value="{{re[r[1]]}}" onChange="clear_sid()">
+				{% elif r[2]==5%}
+				  <input name="row_{{r[1]}}" id="row_{{r[1]}}" type="date" value="{{re[r[1]]}}" onChange="clear_sid()">
+				{% elif r[2]==6%}
+				  <select name="row_{{r[1]}}" class="ts_select" id="row_{{r[1]}}" onChange="clear_sid()">
+					{% for rr in countries %}
+					  {% if re[r[1]] == rr[3] %}
+						<option selected value="{{rr[3]}}"> {{rr[2]}} </option>
+					  {% else %}
+						<option value="{{rr[3]}}"> {{rr[2]}} </option>
+					  {% endif %}
+					{% endfor %}
+				   </select>
+				{% elif r[2]==25%}
+				  <textarea name="row_{{r[1]}}" class="ts_textarea" id="row_{{r[1]}}" cols="80" rows="2" onChange="clear_sid()">{{re[r[1]]}}</textarea>
+				{% endif %}
+			</div>
+		</section>
+      {% endfor %}
+	  </section>
+  {% endif %}
+  <p style="font-size: x-small" id="sessionid1">Session: {{sessionid}}</p>
+  <input type="hidden" name="sessionid" id="sessionid" value="{{sessionid}}">
+</form>
+<p align="right" class="ts_h1" style="width:1010px;"><img src="/img/horse.jpg"></p>
+
+<script type="text/javascript" language="JavaScript">
+function isNumeric(n) {
+	if (!n) {return true;}
+	nn = n.replace(/,/g,"")
+	return !isNaN(parseFloat(nn)) && isFinite(nn);
+};
+
+function check_input(){
+	if (!isNumeric(document.getElementById("row_investor").value)){
+		alert("Please enter numeric value to COTI investor field");
+		return false;
+	}
+	if (!isNumeric(document.getElementById("row_income").value)){
+		alert("Please enter numeric value to Monthly income in USD field");
+		return false;
+	}
+	if (!isNumeric(document.getElementById("row_credit_score").value)){
+		alert("Please enter integer value to Credit score field");
+		return false;
+	}
+	if (!isNumeric(document.getElementById("row_merch_turn").value)){
+		alert("Please enter numeric value to Merchant turnover field");
+		return false;
+	}
+	return true;
+}
+
+function clear_sid(){
+	document.getElementById("sessionid").value="";
+	document.getElementById("sessionid1").innerHTML="Session: ";
+}
+
+function clear_data(){
+	var allElements = document.getElementsByTagName("*");
+
+	document.getElementById("sessionid").value="";
+	document.getElementById("sessionid1").innerHTML="Session: ";
+	document.getElementById("user_id").value="";
+
+	var element;
+    for (var i = 0; i < allElements.length; i++) {
+		element = allElements[i];
+		if(element.name != null){
+			if (element.name.substr(0,4) == "row_"){
+				if (element.type.substr(0,6)=="select"){
+					element.value=element.options[0].value;
+				}
+				else {
+					element.value="";
+					element.checked = false;
+				}
+			}
+		}
+	}
+}
+</script>
+</body>
+</html>

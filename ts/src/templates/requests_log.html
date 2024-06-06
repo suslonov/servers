@@ -1,0 +1,97 @@
+<!DOCTYPE html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href={{ url_for("static", filename = "style.css") }} />
+<title>HTTP API requester</title>
+</head>
+
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         <p style="white-space: pre-wrap">{{ message }}</p>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<p class="ts_h1">HTTP API requester</p>
+<br>
+
+<p class="ts_h1" onclick="s_onclick('1','2','PUT','3fdgdf\"\"gdfgdf'','4');">test</p>
+
+<section style="background-color:#EAF9FF;">
+<form name="forminput" id="forminput" method="post" action="/api_nobody_knows_it777">
+	<input name="url0" class="api_text1" id="url0" type="text" value="{{url0}}" onChange="set_newflag()"><span class="api_slash">/</span>
+	<input name="api0" class="api_text2" id="api0" type="text" value="{{api0}}" onChange="set_newflag()">
+	<select name="type0" class="api_select" id="type0" onChange="set_newflag()">
+		{% if type0 == "POST" %}
+			<option selected> POST </option>
+			<option> GET </option>
+			<option> PUT </option>
+		{% elif type0 == "GET" %}
+			<option> POST </option>
+			<option selected> GET </option>
+			<option> PUT </option>
+		{% elif type0 == "PUT" %}
+			<option> POST </option>
+			<option> GET </option>
+			<option selected> PUT </option>
+		{% else %}
+			<option> POST </option>
+			<option> GET </option>
+			<option> PUT </option>
+		{% endif %}
+	</select>
+	<textarea name="req_data" class="api_textarea" id="req_data" cols="80" rows="2" onChange="set_newflag()">{{req_data}}</textarea>
+	<input type="hidden" name="newflag" id="newflag" value="{{newflag}}">
+ 	<input name="Submit" id= "Send" type="submit" class="api_send" value="Send">
+</form>
+<span class="ts_h2" style="vertical-align:top">Reply = </span><span class="ts_h2" style="vertical-align:top" id="reply">{{reply}}</span>
+</section>
+<br>
+<p class="ts_h2">Request_log</p>
+<table>
+{% for l in ll %}
+	<section>
+	<tr style="border-bottom: 1px solid navy;">
+		<td width="180px" style="vertical-align:top; border-bottom: 1px solid navy;" ondblclick="s_onclick('{{l[1]}}', '{{l[2]}}', '{{l[3]}}', '{{l[4]}}', '{{l[5]}}');">
+			{{l[1]}}
+		</td>
+		<td width="100px" style="vertical-align:top; border-bottom: 1px solid navy;" ondblclick="s_onclick('{{l[1]}}', '{{l[2]}}', '{{l[3]}}', '{{l[4]}}', '{{l[5]}}');">
+			/{{l[2]}}
+		</td>
+		<td width="50px" style="vertical-align:top; border-bottom: 1px solid navy;" ondblclick="s_onclick('{{l[1]}}', '{{l[2]}}', '{{l[3]}}', '{{l[4]}}', '{{l[5]}}');">
+			{{l[3]}}
+		</td>
+		<td width="400px" style="vertical-align:top; border-bottom: 1px solid navy;" ondblclick="s_onclick('{{l[1]}}', '{{l[2]}}', '{{l[3]}}', '{{l[4]}}', '{{l[5]}}');">
+			{{l[4]}}
+		</td>
+		<td width="500px" style="vertical-align:top; border-bottom: 1px solid navy;" ondblclick="s_onclick('{{l[1]}}', '{{l[2]}}', '{{l[3]}}', '{{l[4]}}', '{{l[5]}}');">
+			{{l[5]}}
+		</td>
+	</tr>
+	</section>
+{% endfor %}
+</table>
+
+<script type="text/javascript" language="JavaScript">
+function set_newflag(){
+	document.getElementById("newflag").value="1";
+}
+
+function s_onclick(l1, l2, l3, l4, l5){
+	document.getElementById("url0").value=l1;
+	document.getElementById("api0").value=l2;
+	document.getElementById("type0").value=l3;
+	document.getElementById("req_data").value=l4;
+	document.getElementById("reply").value=l5;
+	document.getElementById("url0").innerHTML=l1;
+	document.getElementById("api0").innerHTML=l2;
+	document.getElementById("req_data").innerHTML=l4;
+	document.getElementById("reply").innerHTML=l5;
+	
+	
+}
+</script>
+</body>
+</html>
+

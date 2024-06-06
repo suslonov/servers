@@ -1,0 +1,35 @@
+<!DOCTYPE html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href={{ url_for("static", filename = "style.css") }} />
+<title>Sessions list</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         <p style="white-space: pre-wrap">{{ message }}</p>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<p class="ts_h1">Sessions list</p>
+<br>
+<table>
+	<tr>
+		<td><b>Session ID</b></td>
+		{% for t in ts_data[0][1:] %}
+		<td><b>{{t}}</b></td>
+		{% endfor %}
+	</tr>
+
+	{% for row in ts_data[1:] %}
+	<tr>
+		<td><a href="./sid/{{row[0]}}">{{row[0]}}</a></td>
+		{% for t in row[1:] %}
+		<td>{{t}}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>			
+</body>

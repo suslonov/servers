@@ -1,0 +1,24 @@
+
+########################################
+## Checks for onboarding and KYC data ##
+########################################
+
+############# Adding an good user
+curl -X PUT -H "Content-Type:application/json" 0.0.0.0:8022/onboard_assign_TS -d '{"Date_of_birth": "1950", "balance":10000000, "Bank_account": true, "Bank_reference": true, "Country": "SGP", "Credit_card_holder": true, "Education": "PhD_Doctorate", "Employment_status": "Unemployed", "Family_status": "Have grandchildren", "Has_license": true, "Identification": "Passport", "Income": "$0 - $1000", "Income_source_declared": true, "Insurance": false, "Investor": true, "Last_fraud_time": "1900", "No_digital_footprint": false, "No_frauds": true, "Phone": true, "Proof_of_residence": false, "Stake": 10000, "ZIP_code": true, "user_ID":"ABCDE"}'
+{"TS":26.912104707875912,"balance":10000000,"time_joined":"2018-06-25T14:34:08.408908","time_last_turn_adj":"2018-06-25T14:34:08.408908","time_prev_txn":"2018-06-25T14:34:08.408908","user_ID":"ABCDE"}
+
+############## Adding an average user
+curl -X PUT -H "Content-Type:application/json" 0.0.0.0:8022/onboard_assign_TS -d '{"Age": "1980", "balance":1, "Bank_account": false, "Bank_reference": false, "Country": "NA", "Credit_card_holder": "True", "Education": "Master", "Employment_status": "Unemployed", "Family_status": "Single", "Has_license": false, "Identification": "Passport", "Income": "$8000 - $16000", "Income_source_declared": true, "Insurance": false, "Investor": true, "Last_fraud_date": "2000", "No_digital_footprint": false, "No_frauds": false, "Phone": true, "Proof_of_residence": false, "Stake": 10000, "ZIP_code": true, "user_ID": "12cad"}'
+{"TS":15.242870462260495,"balance":1,"time_joined":"2018-06-25T14:50:22.946883","time_last_turn_adj":"2018-06-25T14:50:22.946883","time_prev_txn":"2018-06-25T14:50:22.946883","user_ID":"12cad"}
+
+############### Adding a bad user
+curl -X PUT -H "Content-Type:application/json" 0.0.0.0:8022/onboard_assign_TS -d '{"Age": "1980", "balance":1, "Bank_account": false, "Bank_reference": false, "Country": "ZAF", "Credit_card_holder": false, "Education": "Not_educated", "Employment_status": "Unemployed", "Family_status": "Single", "Has_license": false, "Identification": "Not_provided", "Income": "$0 - $1000", "Income_source_declared": true, "Insurance": false, "Investor": true, "Last_fraud_date": "2010", "No_digital_footprint": false, "No_frauds": false, "Phone": true, "Proof_of_residence": false, "Stake": 10000, "ZIP_code": true, "user_ID": "WXYZA"}'
+{"TS":0.0,"balance":1,"time_joined":"2018-06-25T14:42:20.894909","time_last_turn_adj":"2018-06-25T14:42:20.894909","time_prev_txn":"2018-06-25T14:42:20.894909","user_ID":"WXYZA"}
+
+################ Adding a bad user
+curl -X PUT -H "Content-Type:application/json" 0.0.0.0:8022/onboard_assign_TS -d '{"Date_of_birth": "1980", "balance":1, "Bank_account": false, "Bank_reference": false, "Country": "NA", "Credit_card_holder": false, "Education": "Master", "Employment_status": "Unemployed", "Family_status": "Single", "Last_fraud_date": "2000", "No_digital_footprint": false, "No_frauds": false, "Phone": true, "Proof_of_residence": false, "Stake": 10000, "ZIP_code": true, "user_ID": "12cad"}'{"TS":0.0,"balance":1,"time_joined":"2018-06-25T14:54:32.242672","time_last_turn_adj":"2018-06-25T14:54:32.242672","time_prev_txn":"2018-06-25T14:54:32.242672","user_ID":"12cad"}
+
+################ Reading the user parameters.
+curl -X PUT -H "Content-Type:application/json" 0.0.0.0:8022/get_itsa_values -d'{"user_ID":"12cad"}'
+{"Bank_account":"False","Bank_reference":"False","Country":"NA","Credit_card_holder":"True","Date_of_birth":"1900-06-19T07:14:22.708370","Education":"Master","Employment_status":"Unemployed","Family_status":"Single","Has_license":"False","Identification":"Passport","Income":"$8000 - $16000","Income_source_declared":"True","Insurance":"False","Investor":"True","Last_fraud_date":"2000","No_digital_footprint":"False","No_frauds":"False","Phone":"True","Proof_of_residence":"False","Stake":"10000","ZIP_code":"True"}
+

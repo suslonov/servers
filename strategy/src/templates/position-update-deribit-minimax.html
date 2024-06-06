@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Deribit minimax opened positions</title>
+	<style>
+		table, th, td {
+		  border: 1px solid black;
+		  border-collapse: collapse;
+		}
+	</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1><table><td>Deribit minimax instruments for updating prices</td><td align="right"><a href="/minimax">Minimax home</a></td></table></h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}">
+<table>
+	<tr>
+		<td>instrument</td>
+		<td>direction</td>
+		<td>current_price</td>
+		<td>maintenance_margin</td>
+	</tr>
+	{%for p in to_update%}
+	<tr>
+		<td>{{p["instrument"]}}</td>
+		<td>{%if p["direction"] == -1%}sell{%else%}buy{%endif%}</td>
+		<td><input name="price_{{p['instrument']}}_{%if p["direction"] == -1%}-1{%else%}+1{%endif%}" id="price_{{p['instrument']}}_{%if p["direction"] == -1%}-1{%else%}+1{%endif%}" type="text" value="{%if 'current_price' in p%}{{p['current_price']}}{%endif%}" style="width:100px"></td>
+		<td><input name="margin_{{p['instrument']}}_{%if p["direction"] == -1%}-1{%else%}+1{%endif%}" id="margin_{{p['instrument']}}_{%if p["direction"] == -1%}-1{%else%}+1{%endif%}" type="text" value="{%if 'maintenance_margin' in p%}{{p['maintenance_margin']}}{%endif%}" style="width:100px"></td>
+	</tr>
+	{%endfor%}
+</table>
+<input name="EnterPrices" id= "Submit" type="submit" value="EnterPrices">
+</form>
+
+</body>
+</html>

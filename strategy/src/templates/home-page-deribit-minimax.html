@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Deribit minimax strategy calculator</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Deribit minimax strategy calculator</h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}">
+<table border=0>
+	<tr>
+		<td>
+			<input name="process_id" id="process_id" type="hidden" value="{{process_id}}" >
+			<div align="right" ><strong>Term</strong></div>		</td>
+		<td><input name="term" id="term" type="text" value="{{ term|round|int }}" style="width:106px"></td>
+		<td>
+			{%if stop_losses %}
+				<table border=0 style="color:#FF0000">
+				<tr>
+					<div  style="color:#FF0000; font-weight:bold" align="center">There are stop losses to execute! </div>
+				</tr>
+				<tr>
+					<td><div align="center">Bundle</div></td>
+					<td><div align="center">Open</div></td>
+					<td><div align="center">Expiration</div></td>
+					<td><div align="center">Instrument</div></td>
+				</tr>
+				{%for s1 in stop_losses[:5]%}
+					<tr>
+						{%for s2 in s1%}
+							<td><div align="center">{{s2}}</div></td>
+						{%endfor%}
+					</tr>
+				{%endfor%}
+				</table>
+			{%else%}
+				<div align="center" style="color:#666666">No stop-losses touched</div>
+			{%endif%}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div align="right" style="color:#FF0000"><strong>it takes ~ 10 minutes </strong></div>		</td>
+		<td>
+	  		<input name="SubmitButton" id= "calculation_submit" type="submit" value="RunCalculation">
+		</td>
+		<td>
+  			<div align="center">
+	  		  <input name="SubmitButton" id= "submit_add_positions" type="submit" value="AddPositions">
+	  		  <input name="SubmitButton" id= "submit_update_positions" type="submit" value="UpdatePositions">
+	  		  <input name="SubmitButton" id= "submit_portfolio" type="submit" value="Portfolio">
+	  		  <input name="SubmitButton" id= "submit_report" type="submit" value="Report">
+	        </div>
+		</td> 
+	</tr>
+</table>
+</form>
+<div id="results_table">
+{% for r in recommendations %}
+	<h2 style="color:#0000FF">
+	{{r["strategy"]}}
+	</h2>
+		<table border=0>
+			<tr>
+				<td>
+					Buy/Sell
+				</td>
+				<td>
+				  	Contract
+				</td>
+				<td>
+				  	Number of contracts
+				</td>
+				<td>
+				  	Current price
+			  	</td>
+				<td>
+				  	Initial margin
+				</td>
+				<td>
+				  	Maintenance margin
+				</td>
+			</tr>
+			{%for i in r["instruments"] %}
+			<tr align="right">
+				<td align="center">
+					{{i[0]}}
+				</td>
+				<td>
+					{{i[1]}}
+				</td>
+				<td align="center">
+					{{i[2]}}
+				</td>
+				<td>
+					{{"%.2f"|format(i[3])}}
+				</td>
+				<td>
+				{{"%.2f"|format(i[4])}}
+				</td>
+				<td>
+				{{"%.2f"|format(i[5])}}
+				</td>
+			</tr>
+			{%endfor%}
+		</table>
+{%endfor%}
+<br>
+<br>
+{% for s in stages %}
+	<table border=0>
+		<tr>
+			<td>
+				{{s[0]}}
+			</td>
+			<td>
+				{{s[1]}}
+			</td>
+		</tr>
+	</table>
+{%endfor%}
+</div>
+
+
+<script type="text/javascript" language="JavaScript">
+{%if form_submitted%}
+	window.onload=function(){ window.setTimeout(function() { document.datainput.submit(); }, 10000)};
+{%endif%}
+</script>
+</body>
+</html>

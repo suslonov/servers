@@ -1,0 +1,18 @@
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/insert_update_user -d '{"user_ID":"abcde", "balance":1000, "TS":99}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/insert_update_user -d '{"user_ID":"fghij", "balance":1000, "TS":99}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/new_txn_update_all_DBs -d '{"sender_ID": "abcde", "sender_trust":99, "receiver_ID":"fghij", "amount":250, "wrong_doing":"none"}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/new_txn_update_all_DBs -d '{"sender_ID": "abcde", "sender_trust":99, "receiver_ID":"fghij", "amount":250, "wrong_doing":"none", "transaction_time": "2018-06-19T07:15:22.708370"}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/new_txn_update_all_DBs -d '{"sender_ID": "abcde", "sender_trust":99, "receiver_ID":"fghij", "amount":250, "wrong_doing":"none", "transaction_time": "2018-06-20T07:15:22.708370"}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/new_txn_update_all_DBs -d '{"sender_ID": "abcde", "sender_trust":99, "receiver_ID":"fghij", "amount":250, "wrong_doing":"minor", "transaction_time": "2018-06-20T11:15:22.708370"}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/check_user_params -d '{"user_ID":"abcde"}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/check_spending_history -d '{"user_ID":"abcde"}'
+
+curl -X POST -H "Content-Type:application/json" 0.0.0.0:8020/check_receiving_history -d '{"user_ID":"fghij"}'
+

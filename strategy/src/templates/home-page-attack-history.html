@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>MEV attack bribe rates</title>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	  google.charts.load('current', {'packages':['corechart']});
+	  google.charts.setOnLoadCallback(drawChart);
+	
+	  function drawChart() {
+		var data0 = google.visualization.arrayToDataTable([
+		  ['Block', 'bribes ratio'],
+		  {% for d in one_attack_type_line %}
+		  [{{d[0]}}, {{d[1]}}],
+		  {% endfor %}
+		]);
+	
+		var options = {
+		  chartArea: {
+			left:10,
+			top:10,
+			width:'100%',
+			height:'85%',
+			},
+			vAxis:{
+				baseline: 0,
+				viewWindowMode: "explicit",
+				viewWindow:{
+					max:2.0,
+					},
+				format: "percent",
+				textPosition: 'in',
+				},
+		  explorer: {actions: ['dragToPan', 'dragToZoom', 'rightClickToReset']},
+		  legend: { position: 'bottom' },
+		  interpolateNulls: true,
+		};
+	
+		var chart0 = new google.visualization.LineChart(document.getElementById('one_attack_type_line_chart'));
+		chart0.draw(data0, options);
+	
+	  }
+	</script>
+	<style type="text/css">
+	<!--
+	.style1 {color: #FF0000}
+	-->
+	</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+{% if attack_summary_table %}
+<form name="forminput" id="forminput" method="post" action="{{sub_path}}">
+	  <table border=0>
+		<tr>
+		  <td>&nbsp;</td>
+		  {% for h in attack_summary_table[0][1:]%}
+		  <td><div align="center"><strong>{{h}}</strong></div></td>
+		  {%endfor%}
+		</tr>
+		{% for r in attack_summary_table[1:]%}
+		<tr>
+			<td>
+				{% if r[0] == checked_row %}
+					 <input name="row" id="row_{{ r[0] }}" value="{{ r[0] }}" type="radio" checked>
+				{% else %}
+					  <input name="row" id="row_{{ r[0] }}" value="{{ r[0] }}" type="radio" > 
+				{% endif %}
+			</td>
+			<td width="200px"> {{ r[1] }} </td>
+			<td width="400px"> {{ r[2] }} </td>
+			{% for f in r[3:]%}
+				<td width="140px"> <div align="right">{{ f }} </div></td>
+			{% endfor %}
+	    </tr>
+		{% endfor %}
+	  </table>
+  <input name="Submit" id= "ClassifySubmit" type="submit" style="font-weight:600" value="Show history">
+</form>
+{% endif%}
+
+{% if one_attack_type_line %}
+<div id="one_attack_type_line_chart" style="width: 1200px; height: 1000px"></div>
+{% endif %}
+
+</body>
+</html>

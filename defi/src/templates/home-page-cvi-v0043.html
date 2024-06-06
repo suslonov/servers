@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon-cvi.ico">
+	<title>ETHVOL V0.0.4.3</title>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	  google.charts.load('current', {'packages':['corechart']});
+	  google.charts.setOnLoadCallback(drawChart);
+	
+	  function drawChart() {
+		var data1 = google.visualization.arrayToDataTable([
+		  ['Calculated at', "cvi_ETH", "cvi_ETH_EMA"],
+		  {% for d in chart_values_eth %}
+		  [{{d[0]}}, {{d[1]}}, {{d[2]}}],
+		  {% endfor %}
+		]);
+	
+		var options = {
+		  chartArea: {
+			left:10,
+			top:10,
+			width:'100%',
+			height:'85%',
+			},
+			vAxis:{
+				baseline: 0,
+				viewWindowMode: "explicit",
+				viewWindow:{
+					min:35.0,
+					},
+				textPosition: 'in',
+				},
+		  explorer: {actions: ['dragToPan', 'dragToZoom', 'rightClickToReset']},
+		  legend: { position: 'bottom' },
+		  interpolateNulls: true,
+		};
+	
+		var chart1 = new google.visualization.LineChart(document.getElementById('alg_chart_eth'));
+		chart1.draw(data1, options);
+	  }
+	</script>
+	<style type="text/css">
+	<!--
+	.style1 {color: #FF0000}
+	-->
+	</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>version: 0.0.4.3, Calculation:V4, Smoothing:V4, RenewPeriod:30 min, Threshold: 2.5%, Smoothing factor: 0.4/0.08</h1>
+
+<h2>ETHVOL  <span class="style1">V0.0.4.3 </span> = {{ethvol_eth}}, EMA = {{ema_ethvol_eth}}</h2>
+<p>ETHVOL  is calculated each minute, this chart shows hourly values (UTC) </p>
+
+{% if chart_values_eth %}
+<div id="alg_chart_eth" style="width: 900px; height: 500px"></div>
+{% else %}
+<h2>no data for the chart</h2>
+{% endif %}
+
+</body>
+</html>

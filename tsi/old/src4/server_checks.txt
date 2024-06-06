@@ -1,0 +1,87 @@
+#! /bin/bash
+
+############################### 
+## Checks - adding users     ##
+###############################
+
+############# Get a good user ITSA	##
+ curl -X PUT -H "Content-Type:application/json" $1/onboard_assign_TS -d '{"Date_of_birth": "1950", "balance":10000000, "Bank_account": true, "Bank_reference": true, "Children":"Have_grandchildren", "Citizenship":"USA", "Country_of_residence": "SGP", "Credit_card_holder": true, "Education": "PhD_Doctorate", "Employment_status": "Employed", "Marital_status":"Permament_relationship", "Has_license": true, "Identification": "Passport", "Income": "$32000+", "Income_source_declared": true, "Insurance": true, "Investor": true, "Last_fraud_time": "1900", "No_digital_footprint": false, "No_frauds": true, "Phone": true, "Proof_of_residence": true, "Stake": 1000000, "ZIP_code": true, "user_ID":"ABCDE"}'
+echo '{"TS":34.8344226044226,"balance":10000000,"time_joined":"2018-06-28T08:20:24.480802","time_last_turn_adj":"2018-06-28T08:20:24.480802","time_prev_txn":"2018-06-28T08:20:24.480802","user_ID":"ABCDE"}'
+########## Adding to working (TSUA) DB 	##
+curl -X PUT -H "Content-Type:application/json" $2/insert_update_user -d '{"TS":34.8344226044226,"balance":10000000,"time_joined":"2018-06-27T14:40:22.675042","time_last_turn_adj":"2018-06-27T14:40:22.675042","time_prev_txn":"2018-06-27T14:40:22.675042","user_ID":"ABCDE"}'
+echo '{"user_ID":"ABCDE"}'
+########## Checking user (TSUA) details ##
+curl -X PUT -H "Content-Type:application/json" $2/check_user_params -d '{"user_ID":"ABCDE"}'
+echo '{"TS":"34.8344226044226","alpha":"0.01","balance":"10000000","beta":"1","time_joined":"2018-06-27T14:40:22.675042","time_last_turn_adj":"2018-06-27T14:40:22.675042","time_prev_txn":"2018-06-27T14:40:22.675042","txns_last_maj_wrong":"10000","txns_last_min_wrong":"10000"}'
+##############################################################################################################
+
+############# Adding an bad (terrrible) user (worst values chosen by default)##
+ curl -X PUT -H "Content-Type:application/json" $1/onboard_assign_TS -d '{"user_ID":"xyzab"}'
+echo '{"TS":0.0,"balance":1,"time_joined":"2018-06-27T14:49:10.102102","time_last_turn_adj":"2018-06-27T14:49:10.102102","time_prev_txn":"2018-06-27T14:49:10.102102","user_ID":"xyzab"}'
+########## Adding to working (TSUA) DB 	##
+curl -X PUT -H "Content-Type:application/json" $2/insert_update_user -d '{"TS":0.0,"balance":1,"time_joined":"2018-06-27T14:49:10.102102","time_last_turn_adj":"2018-06-27T14:49:10.102102","time_prev_txn":"2018-06-27T14:49:10.102102","user_ID":"xyzab"}'
+echo '{"user_ID":"xyzab"}'
+########## Checking user (TSUA) details ##
+curl -X PUT -H "Content-Type:application/json" $2/check_user_params -d '{"user_ID":"xyzab"}'
+echo '{"TS":"0.0","alpha":"0.01","balance":"1","beta":"1","time_joined":"2018-06-27T14:49:10.102102","time_last_turn_adj":"2018-06-27T14:49:10.102102","time_prev_txn":"2018-06-27T14:49:10.102102","txns_last_maj_wrong":"10000","txns_last_min_wrong":"10000"}'
+##############################################################################################################
+
+############# Adding an average user	##
+curl -X PUT -H "Content-Type:application/json" $1/onboard_assign_TS -d '{"Date_of_birth": "1950", "balance":10000, "Bank_account": true, "Bank_reference": true, "Children":"Raising_children", "Citizenship":"Israel", "Country_of_residence": "ZAF", "Credit_card_holder": true, "Education": "Secondary", "Employment_status": "Retired", "Marital_status":"Married", "Has_license": true, "Identification": "National_ID", "Income": "$2000-$4000", "Income_source_declared": true, "Insurance": true, "Investor": false,"No_digital_footprint": false, "No_frauds": true, "Phone": false, "Proof_of_residence": false, "Stake": 0, "ZIP_code": true, "user_ID":"peter"}'
+echo '{"TS":27.485841523341524,"balance":10000,"time_joined":"2018-06-27T15:04:58.746600","time_last_turn_adj":"2018-06-27T15:04:58.746600","time_prev_txn":"2018-06-27T15:04:58.746600","user_ID":"peter"}'
+### Adding to working (TSUA) DB 	##
+curl -X PUT -H "Content-Type:application/json" $2/insert_update_user -d '{"TS":27.485841523341524,"balance":10000,"time_joined":"2018-06-27T15:04:58.746600","time_last_turn_adj":"2018-06-27T15:04:58.746600","time_prev_txn":"2018-06-27T15:04:58.746600","user_ID":"peter"}'
+echo '{"user_ID":"peter"}'
+### Checking user (TSUA) details	##
+curl -X PUT -H "Content-Type:application/json" $2/check_user_params -d '{"user_ID":"peter"}'
+echo '{"TS":"27.485841523341524","alpha":"0.01","balance":"10000","beta":"1","time_joined":"2018-06-27T15:04:58.746600","time_last_turn_adj":"2018-06-27T15:04:58.746600","time_prev_txn":"2018-06-27T15:04:58.746600","txns_last_maj_wrong":"10000","txns_last_min_wrong":"10000"}'
+#################################################
+##	Transaction checks - making transactions
+#################################################
+curl -X PUT -H "Content-Type:application/json" $2/new_txn_update_all_DBs -d '{"sender_ID":"peter", "receiver_ID":"xyzab","amount":250,"wrong_doing":"none"}'
+echo '{"TS":27.91098310810811,"type":"senders new TS"}'
+
+curl -X PUT -H "Content-Type:application/json" $2/new_txn_update_all_DBs -d '{"sender_ID":"peter", "receiver_ID":"xyzab","amount":250,"wrong_doing":"none"}'
+echo '{"TS":28.33187327702703,"type":"senders new TS"}'
+
+curl -X PUT -H "Content-Type:application/json" $2/new_txn_update_all_DBs -d '{"sender_ID":"ABCDE", "receiver_ID":"xyzab","amount":250,"wrong_doing":"none"}'
+echo '{"TS":35.186078378378376,"type":"senders new TS"}'
+
+curl -X PUT -H "Content-Type:application/json" $2/new_txn_update_all_DBs -d '{"sender_ID":"ABCDE", "receiver_ID":"peter","amount":250,"wrong_doing":"none"}'
+echo '{"TS":35.534217594594594,"type":"senders new TS"}'
+
+curl -X PUT -H "Content-Type:application/json" $2/new_txn_update_all_DBs -d '{"sender_ID":"peter", "receiver_ID":"ABCDE","amount":2500,"wrong_doing":"major"}'
+echo '{"TS":14.165936638513514,"type":"senders new TS"}'
+
+curl -X PUT -H "Content-Type:application/json" $2/new_txn_update_all_DBs -d '{"sender_ID":"ABCDE", "receiver_ID":"peter","amount":2500,"wrong_doing":"minor"}'
+echo '{"TS":33.75750671486486,"type":"senders new TS"}'
+#################################################
+##	Checking transaction history
+#################################################
+curl -X PUT -H "Content-Type:application/json" $2/check_spending_history -d '{"user_ID":"ABCDE"}'
+echo '{"amount":["2500","250","250"],"receiver_ID":["peter","peter","xyzab"],"sender_trust":["35.534217594594594","35.186078378378376","34.8344226044226"],"transaction_time":["2018-06-28T08:09:53.812662","2018-06-28T08:07:07.376541","2018-06-28T08:06:03.083548"],"wrong_doing":["minor","none","none"]}'
+
+curl -X PUT -H "Content-Type:application/json" $2/check_receiving_history -d '{"user_ID":"ABCDE"}'
+echo '{"amount":["0"],"sender_ID":["peter"],"sender_trust":["28.33187327702703"],"transaction_time":["2018-06-28T08:08:43.367761"],"wrong_doing":["major"]}'
+
+curl -X PUT -H "Content-Type:application/json" $2/check_spending_history -d '{"user_ID":"xyzab"}'
+echo '{"amount":[],"receiver_ID":[],"sender_trust":[],"transaction_time":[],"wrong_doing":[]}'
+
+curl -X PUT -H "Content-Type:application/json" $2/check_receiving_history -d '{"user_ID":"xyzab"}'
+echo '{"amount":["250","250","250"],"sender_ID":["ABCDE","peter","peter"],"sender_trust":["34.8344226044226","27.91098310810811","27.485841523341524"],"transaction_time":["2018-06-28T08:06:03.083548","2018-06-28T08:03:33.945573","2018-06-28T08:00:17.050357"],"wrong_doing":["none","none","none"]}'
+
+curl -X PUT -H "Content-Type:application/json" $2/check_spending_history -d '{"user_ID":"peter"}'
+echo '{"amount":["0","250","250"],"receiver_ID":["ABCDE","xyzab","xyzab"],"sender_trust":["28.33187327702703","27.91098310810811","27.485841523341524"],"transaction_time":["2018-06-28T08:08:43.367761","2018-06-28T08:03:33.945573","2018-06-28T08:00:17.050357"],"wrong_doing":["major","none","none"]}'
+
+curl -X PUT -H "Content-Type:application/json" $2/check_receiving_history -d '{"user_ID":"peter"}'
+echo '{"amount":["2500","250"],"sender_ID":["ABCDE","ABCDE"],"sender_trust":["35.534217594594594","35.186078378378376"],"transaction_time":["2018-06-28T08:09:53.812662","2018-06-28T08:07:07.376541"],"wrong_doing":["minor","none"]}'
+
+
+
+
+
+
+
+
+
+

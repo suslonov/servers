@@ -1,0 +1,48 @@
+#!/bin/bash
+
+filename=/tmp/to-process
+
+if [ -e "$filename" ]
+then
+#    echo "file exists"
+    exit 0
+fi
+
+wget http://nn-art.r-synergy.com/to-process -O "$filename"
+
+filesize=$(stat -c%s "$filename")
+
+if (( $filesize <= 3))
+then
+#    echo "go out"
+    rm "$filename"
+    exit 0
+#else
+#    echo "process"
+fi
+
+# added by Anaconda3 4.4.0 installer
+export PATH="/usr/local/cuda/bin/:$PATH"
+export PATH=~/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/anton/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/anton/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/anton/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/anton/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+conda activate nn
+
+python /www/nn-art/src/process_pictures.py
+
+rm "$filename"

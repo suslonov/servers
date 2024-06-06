@@ -1,0 +1,129 @@
+# encoding: utf-8
+
+import os
+import sys
+import json
+import datetime
+import dateutil.parser
+from flask import Flask, request, jsonify, Response, render_template
+
+#####################################
+# Loading general defaults
+#####################################
+defaults = json.load(open("defaults.json"))
+default_user_attributes = defaults["default_user_attributes"]
+regressed_weights = defaults["regressed_feature_weights"]
+country_CGIs = defaults["country_CGI"]
+
+bool_T_strings = ["TRUE", "True", "T", "true", "t"]
+bool_F_strings = ["", "NA", "FALSE", "False", "false",
+                  "F", "f", "None", "none", "No", "no", "n"]
+
+######################################
+income_str_to_val = {"None": 0.0, "$0-$1000": 0, "$1000-$2000": 1000.0, "$2000-$4000": 2000.0,
+                     "$4000-$8000": 4000.0, "$8000-$16000": 8000, "$16000-$32000": 16000, "$32000+": 32000.0}
+
+regular_boolean_parms = ["Bank_account", "Credit_card_holder", "Has_license", "Credit_history",
+                         "Income_source_declared", "Insurance", "Proof_of_residence", "Investor", "Phone", "Stable_income"]
+
+unregular_boolean_parms = ["Bank_reference",
+                           "ZIP_code", "Site", "Social_network_account"]
+#####################################
+# Calculation
+#####################################
+def reformulate_user_attributes(user_attr: dict):
+    feature_dict = dict()
+    feature_dict["Identification"] = user_attr["Identification"]
+    # Considering numerical features
+    age = (datetime.datetime.now() -
+           dateutil.parser.parse(user_attr["Date_of_birth"])).days/365.25
+    feature_dict["Age"] = age if age > 0 else 0
+    raw_inc = user_attr["Income"]
+    if type(raw_inc) == float or type(raw_inc) == int:
+        feature_dict["Income"] = float(raw_inc)
+    elif type(raw_inc) == str:
+        if raw_inc in income_str_to_val:
+            feature_dict["Income"] = income_str_to_val[raw_inc]
+        else:
+            feature_dict["Income"] = float(raw_inc.replace("$", ""))
+    feature_dict["Stake"] = float(user_attr["Stake"])
+    feature_dict["Citizenship"] = float(country_CGIs[user_attr["Citizenship"]])
+    feature_dict["Country"] = float(country_CGIs[user_attr["Country"]])
+
+   # Considering features  where multiple possible choices are possible ("Nones" are ommitted as they add no points)
+    for fam_attr in ["Raising_children", "Have_grandchildren"]:
+        feature_dict[fam_attr] = 1.0 if user_attr["Children"] == fam_attr else 0
+    for edu_attr in ["Elementary", "Secondary", "Bachelor"]:
+        feature_dict[edu_attr] = 1.0 if user_attr["Education"] == edu_attr else 0.0
+
+    # Making necessary edits for fields where some choices are merged into one
+    feature_dict["Post_graduate"] = 1.0 if \
+        (user_attr["Education"] == "PhD_Doctorate" or user_attr["Education"] == "Master") \
+        else 0.0
+    feature_dict["Relationship"] = 1.0 if \
+        (user_attr["Marital_status"] == "Married" or user_attr["Marital_status"] == "Permament_relationship") \
+        else 0.0
+    emp_status = user_attr["Employment_status"]
+    feature_dict["Employed"] = 1.0 if emp_status == "Employed" else 0.0
+    feature_dict["Employment_other"] = 1.0 if \
+        emp_status in ["Retired", "Self_employed", "Student"] else 0.0
+
+   # Converting booleans to their mathematical equivalent for regular and unregular boolean params
+    for bool_parm in regular_boolean_parms + unregular_boolean_parms:
+        attr = user_attr[bool_parm]
+        fail_message = "FAILED: " + \
+            str(attr)+" for parameter "+bool_parm+" not recognized."
+
+        if type(attr) == bool:
+            feature_dict[bool_parm] = float(attr)
+        elif type(attr) in [int, float] and float(attr) in [0.0, 1.0]:
+            user_attr[bool_parm] = float(attr)
+        elif type(attr) == str:
+            if bool_parm in unregular_boolean_parms:
+                feature_dict[bool_parm] = 0.0 if attr in bool_F_strings else 1.0
+            else:
+                feature_dict[bool_parm] = 1.0 if attr in bool_T_strings else 0.0
+        else:
+            return fail_message
+    #
+    return feature_dict
+
+
+def compute_itsa(feature_dict: dict):
+    if type(feature_dict) != dict:
+        return feature_dict
+    TS = 0
+    if feature_dict["Identification"] not in ["National_ID", "Passport"]:
+        return TS
+    else:
+        TS += 10
+        TS += sum([feature_dict.get(feature,0)*weight for feature, weight in regressed_weights.items()])
+        # for feature, weight in regressed_weights.items():
+        #     print("Adding contribution " + str(feature_dict[feature]*weight) + " for feature " + str(feature))
+        #     TS += feature_dict[feature]*weight
+        return TS
+#####################################
+# Server operation
+#####################################
+
+
+application = Flask(__name__)
+
+
+@application.route("/calculate_initial_TS", methods=["PUT"])
+def report_ITSA():
+    user_attributes = default_user_attributes.copy()
+    api_request = request.get_json()
+
+    # override with incoming values
+    for k, v in api_request.items():
+        user_attributes[k] = v
+    feature_dict = reformulate_user_attributes(user_attributes)
+    TS = compute_itsa(feature_dict)
+    return jsonify({"TS": TS})
+
+
+if __name__ == '__main__':
+    # application.run(host='0.0.0.0', debug=False, port=1020)
+    application.run(host=defaults["ip_address"]["host"],
+                    debug=False, port=defaults["ip_address"]["port"])

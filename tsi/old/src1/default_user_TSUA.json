@@ -1,0 +1,13 @@
+{
+    "user_ID": -1,
+    "alpha": 0.01,
+    "beta": 1,
+    "TS": 1,
+    "balance":100,
+    "centrality": 0.01,
+    "txns_last_maj_wrong": 10000,
+    "txns_last_min_wrong": 10000,
+    "time_joined":"2018-06-19T07:14:22.708370",
+    "time_prev_txn": "2018-06-19T07:14:22.708370",
+    "time_last_turn_adj": "2018-06-19T07:14:22.708370"
+}

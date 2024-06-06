@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>CVI hedge calculator</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>CVI hedge calculator</h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}" onSubmit="button_onclick()">
+<table border=0>
+	<tr>
+		<td width="600">
+			<strong>Amount to hedge</strong> 
+			<input name="amount" id="amount" type="text" value="{{amount}}">
+		</td>
+		<td>
+			<strong>Strike range +/-</strong> 
+			<input name="strike_range" id="strike_range" type="text" value="{{strike_range}}">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div><strong>Term</strong> 
+			    <input name="term" id="term" type="text" value="{{ term|round|int }}">
+	        </div>
+		</td>
+		<td>
+			<strong>Direct request </strong>
+			{%if direct_request%}
+			  <input name="direct_request" type="checkbox" value="" checked>
+			{%else%}
+			  <input name="direct_request" type="checkbox" value="" >
+			{%endif%}
+		</td>
+	<tr>
+		<td><div align="right" style="color:#FF0000"><strong>it can take some time! -&gt; </strong></div></td>
+		<td>
+	  		<input name="RunCalculation" id= "Submit" type="submit" value="RunCalculation">
+		</td>
+	</tr>
+</table>
+</form>
+{%if rate_start %}
+<h2>Each following contract has Vega (Ncontr. * Rate * Vega) ≈ {{amount}} * sqrt({{term}} / 365) / 2</h2>
+<h2 style="color:#0000FF">
+Current rates
+</h2>
+<table border=0>
+	{% for c in rate_start %}
+		<tr>
+			<td>
+				{{c}}
+			</td>
+			<td>
+				{{"%.2f"|format(rate_start[c])}}
+			</td>
+		</tr>
+	{%endfor%}
+</table>
+{%endif%}		
+<br>
+{%if funding_fee %}
+<h2 style="color:#0000FF">
+Funding fee estimation for {{ term|round|int }} days
+</h2>
+<table border=0>
+	<tr>
+		<td>
+		</td>
+		<td>
+			Index value
+		</td>
+		<td>
+			Funding fee level
+		</td>
+		<td>
+			Funding fee estimation per 1 USD
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Current CVI (v003, combined)
+		</td>
+		<td>
+			{{"%.2f"|format(funding_fee["cvi"])}}
+		</td>
+		<td>
+			{{"%.2f"|format(funding_fee["cvi_ff"]*100)}}%
+		</td>
+		<td>
+			{{"%.2f"|format(funding_fee["cvi_ff_amount"])}}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Average CVI (all the time)
+		</td>
+		<td>
+			{{"%.2f"|format(funding_fee["cvi_avg"])}}
+		</td>
+		<td>
+			{{"%.2f"|format(funding_fee["cvi_avg_ff"]*100)}}%
+		</td>
+		<td>
+			{{"%.2f"|format(funding_fee["cvi_avg_ff_amount"])}}
+		</td>
+	</tr>
+</table>
+{%endif%}		
+<br>
+<div id="results_table">
+{% for bc in best_strategies %}
+	<h2 style="color:#0000FF">
+	{{bc}}
+	</h2>
+	{%for curr in best_strategies[bc]%}
+		<h2>
+		{{curr}}
+		</h2>
+		<table border=0>
+			<tr>
+				<td>
+				</td>
+				<td width="30">
+				</td>
+				<td style="vertical-align: top" align="center">
+				  <strong>Contract</strong>
+				</td>
+				<td style="vertical-align: top" width="80px" align="center">
+				  <strong>Vega</strong>
+			  </td>
+				<td style="vertical-align: top" width="80px" align="center">
+				  <strong>Delta</strong>
+			  </td>
+				<td style="vertical-align: top" width="80px" align="center">
+				  <strong>Current price, USD</strong>
+			  </td>
+				<td style="vertical-align: top" width="80px" align="center">
+				  <strong>Number of contracts</strong>
+			  </td>
+			</tr>
+			{%for c in best_strategies[bc][curr]%}
+			<tr>
+				<td>
+					{{c["type"]}}
+				</td>
+				<td>
+				</td>
+				<td>
+					<div align="right">{{c["contract"]}}</div>
+				</td>
+				<td>
+					<div align="right">{{"%.4f"|format(c["Vega"])}}</div>
+				</td>
+				<td>
+					<div align="right">{{"%.4f"|format(c["Delta"])}}</div>
+				</td>
+				<td>
+					<div align="right">{{"%.2f"|format(c["price"])}}</div>
+				</td>
+				<td>
+					<div align="right">{{"%.2f"|format(c["Ncontracts"])}}</div>
+				</td>
+			</tr>
+			{%endfor%}
+		</table>
+	{%endfor%}
+{%endfor%}
+</div>
+
+
+<script type="text/javascript" language="JavaScript">
+function button_onclick(){
+	var obj = document.getElementById("results_table");
+	obj.setAttribute('style', "background-color:#AAAAAA");
+}
+
+</script>
+</body>
+</html>

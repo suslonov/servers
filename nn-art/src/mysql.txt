@@ -1,0 +1,12 @@
+mysql -u root -p
+create database nn_art;
+create user 'nn_art'@'localhost' IDENTIFIED WITH mysql_native_password BY 'nn_art1234';
+grant all on nn_art.* to 'nn_art'@'localhost';
+
+mysql -u nn_art -p
+use nn_art;
+
+create table images_table (ts DECIMAL(18,6) NOT NULL PRIMARY KEY, image LONGBLOB, processed INT DEFAULT 0);
+create table results_table (ts DECIMAL(18,6) NOT NULL PRIMARY KEY, results TEXT);
+
+

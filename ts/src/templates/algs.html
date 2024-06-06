@@ -1,0 +1,35 @@
+<!DOCTYPE html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href={{ url_for("static", filename = "style.css") }} />
+<title>About the project</title>
+</head>
+
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         <p style="white-space: pre-wrap">{{ message }}</p>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<p class="ts_h1">Trust Score prototype algorithm</p>
+<br>
+<p class="ts_h2">Algorithms sequences</p>
+	{% for a in algs %}
+		<p>{{a}}</p>
+{% endfor %}
+
+<br>
+<p class="ts_h2">Algorithm counting code</p>
+	{% for c in code %}
+		{% if c[0] == '#' %}
+			<p style="white-space: pre-wrap; margin-top: 0px;margin-bottom: 0px; color:#990000">{{c}}</p>
+		{% elif c[0:3] == 'def' or c[0:5] == 'class' %}
+			<p style="white-space: pre-wrap; margin-top: 0px;margin-bottom: 0px; font-weight:bold">{{c}}</p>
+		{% else %}
+			<p style="white-space: pre-wrap; margin-top: 0px;margin-bottom: 0px;">{{c}}</p>
+		{% endif %}
+	{% endfor %}
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Algorithm journal</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Algorithm journal</h1>
+<br>
+{% if j_list %}
+<table border=0>
+	{% for j in j_list %}
+	<tr>
+		<td>
+			{{j[1]}}
+	  	 </td>
+		<td>
+			{{j[2]}}
+	  	 </td>
+		<td>
+			{{j[3]}}
+	  	 </td>
+		<td>
+			{% if j[4] < 0 %}<span style="color:#F00000;">{{j[4]}}</span>{% else %}{{j[4]}}{% endif %}
+	  	 </td>
+		<td>
+			{% if j[5] < 0 %}<span style="color:#F00000;">{{j[5]}}</span>{% else %}{{j[5]}}{% endif %}
+	  	 </td>
+	</tr>
+	{%endfor%}
+</table>
+
+<form name="ShowMore" id="ShowMore" method="post" action="{{sub_path}}morejournal">
+	<table border=0>
+		<tr>
+			<td>
+				From: <input name="JournalFrom" type="text" value="0">
+			</td>
+			<td>
+				To: <input name="JournalTo" type="text" value="1000">
+			</td>
+		</tr>
+	</table>	
+	<input name="MoreJournal" id= "MoreJournal" type="submit" value="Show more journal">
+</form>
+
+{% endif %}
+
+</body>
+</html>

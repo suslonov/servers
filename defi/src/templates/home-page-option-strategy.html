@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IL hedge calculator</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>IL hedge calculator</h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}" onSubmit="button_onclick()">
+<table border=0>
+	<tr>
+		<td>
+		</td>
+		<td>
+			<div align="right"><strong>No IL hedge</strong>
+				{%if no_hedge%}
+			      <input name="no_hedge" type="checkbox" value="" onChange="nohedge(this)" checked>
+				{%else%}
+			      <input name="no_hedge" type="checkbox" value="" onChange="nohedge(this)">
+				{%endif%}
+	        </div></td>
+	</tr>
+	<tr>
+		<td>
+			<strong>Amount to hedge</strong> 
+			{%if no_hedge%}
+				<input name="amount" id="amount" type="text" value="{{amount}}" disabled>
+			{%else%}
+				<input name="amount" id="amount" type="text" value="{{amount}}">
+			{%endif%}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div align="right"><strong>Term</strong> 
+			    <input name="term" id="term" type="text" value="{{term}}">
+	        </div></td>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p align="center"><strong>Hedge ratios</strong></p>
+			{% for s in strategies_list %}
+			<p align="right">
+				<strong>{{s}}</strong> 
+				{%if fit_ratio or no_hedge%}
+					<input name="{{s}}" id="{{s}}" type="text" value="{{strategies_list[s]}}" disabled>
+				{%else%}
+					<input name="{{s}}" id="{{s}}" type="text" value="{{strategies_list[s]}}">
+				{%endif%}
+			</p>
+			{% endfor %}
+		</td>
+		<td style="vertical-align: top">
+			<div align="right"><strong>Fit ratio</strong>
+				{%if fit_ratio%}
+			    	<input name="fit_ratio" type="checkbox" value="" onChange="fitratio(this)" checked>
+				{%else%}
+			    	<input name="fit_ratio" type="checkbox" value="" onChange="fitratio(this)">
+				{%endif%}
+	        </div>
+			<div align="right"><strong>To expiration</strong>
+				{%if to_expiration%}
+			    	<input name="to_expiration" type="checkbox" value="" checked>
+				{%else%}
+			    	<input name="to_expiration" type="checkbox" value="">
+				{%endif%}
+	        </div>
+		</td>
+	</tr>
+	<tr>
+		<td><div align="right" style="color:#FF0000"><strong>it can take some time! -&gt; </strong></div></td>
+		<td>
+	  		<input name="RunCalculation" id= "Submit" type="submit" value="RunCalculation">
+		</td>
+	</tr>
+</table>
+</form>
+
+<div id="all_results">
+<br>
+{% if strategy %}
+<h2>
+	<table id="results_table", border=0>
+	<tr>
+		<td width="600px">
+			Recommended strategy is
+		</td>
+		<td>
+			<div style="color:#FF0000">{{strategy}}</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Principal amount (ETH)
+		</td>
+		<td>
+			{{rate}}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Capital requirements (not including margin deposits)
+		</td>
+		<td>
+			{{plan_price}}
+		</td>
+	</tr>
+	{% if adjusted_capital %}
+	<tr>
+		<td>
+			Adjusted capital requirements
+		</td>
+		<td>
+			{{adjusted_capital}}
+		</td>
+	</tr>
+	{% endif%}
+	<tr>
+		<td>
+			Number of contracts
+		</td>
+		<td>
+			{{n_contracts}}
+		</td>
+	</tr>
+	</table>
+</h2>
+	{%for b in best_strategies%}
+	<h3>{{b[1]}}</h3>
+	<h3>Forecast (without a premium, based on BS price prognosis) =  {{b[0]}}</h3>
+	<table border=0>
+		<tr>
+			<td>
+			</td>
+			<td style="vertical-align: top">
+			  <strong>Contract</strong>
+			</td>
+			<td style="vertical-align: top" width="80px">
+			  <strong>Current price</strong>
+			 </td>
+			<td>
+			</td>
+			<td>
+			  <div align="center"><strong>Forecasts for the corner points</strong></div>
+			  <table>
+				{%for f in b[2][0][3]%}
+			  	<td width="80px">
+					<div align="right">{{f}}</div>
+				 </td>
+				{%endfor%}
+			  </table>
+			 </td>
+		{%for c in b[2]%}
+		<tr>
+			<td>
+				{{c[0]}}
+			</td>
+			<td>
+				<div align="right">{{c[1]}}</div>
+			</td>
+			<td>
+				<div align="right">{{c[2]}}</div>
+			</td>
+			<td>
+			</td>
+			<td>
+			  <table>
+				{%for f in c[3]%}
+			  	<td width="80px">
+					<div align="right">{{c[3][f]}}</div>
+				</td>
+				{%endfor%}
+			  </table>
+			</td>
+		</tr>
+		{%endfor%}
+	</table>
+	{%endfor%}
+{% endif %}
+</div>
+
+<script type="text/javascript" language="JavaScript">
+function nohedge(obj){
+	if (obj.checked){
+		document.getElementById("amount").setAttribute('disabled', "");
+		{% for s in strategies_list %}
+			document.getElementById("{{s}}").setAttribute('disabled', "");
+		{%endfor%}
+	}
+	else {
+		document.getElementById("amount").removeAttribute('disabled');
+		{% for s in strategies_list %}
+			document.getElementById("{{s}}").removeAttribute('disabled');
+		{%endfor%}
+	}
+}
+
+function fitratio(obj){
+	if (obj.checked){
+		{% for s in strategies_list %}
+			document.getElementById("{{s}}").setAttribute('disabled', "");
+		{%endfor%}
+	}
+	else {
+		{% for s in strategies_list %}
+			document.getElementById("{{s}}").removeAttribute('disabled');
+		{%endfor%}
+	}
+}
+function button_onclick(){
+	var obj = document.getElementById("all_results");
+	obj.setAttribute('style', "background-color:#AAAAAA");
+}
+
+</script>
+</body>
+</html>

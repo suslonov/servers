@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Deribit minimax position monitor</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Deribit minimax position monitor</h1>
+
+{% if wallet_data %}
+	<h2 style="color:#0000FF">
+		Wallet at {{now_date}}
+	</h2>
+	<table border=1>
+		<tr>
+			<td>
+				currency
+			</td>
+			{% for n in wallet_names %}
+				<td>
+					{{n}}
+				</td>
+			{% endfor %}
+		</tr>
+		{% for r in wallet_data %}
+			<tr>
+				<td>
+					{{r}}
+				</td>
+				{% for n in wallet_names %}
+					<td>
+						{{wallet_data[r][n]}}
+					</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+
+{% if exchange_positions %}
+	<h2 style="color:#0000FF">
+		<br>
+		Positions
+	</h2>
+	<table border=1>
+		<tr>
+			<td>
+				position
+			</td>
+			{% for n in exchange_positions_names %}
+				<td>
+					{{n}}
+				</td>
+			{% endfor %}
+		</tr>
+		{% for r in exchange_positions %}
+			<tr>
+				<td>
+					{{r}}
+				</td>
+				{% for n in exchange_positions_names %}
+					<td>
+						{{exchange_positions[r][n]}}
+					</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+
+{% if exchange_orders %}
+	<h2 style="color:#0000FF">
+		<br>
+		Orders
+	</h2>
+	<table border=1>
+		<tr>
+			<td>
+				order id
+			</td>
+			{% for n in exchange_orders_names %}
+				<td>
+					{{n}}
+				</td>
+			{% endfor %}
+		</tr>
+		{% for r in exchange_orders %}
+			<tr>
+				<td>
+					{{r}}
+				</td>
+				{% for n in exchange_orders_names %}
+					<td>
+						{{exchange_orders[r][n]}}
+					</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+
+</body>
+</html>

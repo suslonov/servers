@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Art selection neural network</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{sub_path}}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="inputFile">File input</label>
+            <input class="form-control-file" type="file" name="inputFile">
+        </div>
+
+		<input name="Submit_button" id= "Submit_button" type="submit" value="Submit">
+</form>
+
+<form name="Renew" id="Renew" method="post" action="{{sub_path}}renew">
+	Image load timestamp <input name="image_ts" type="text" value="{{image_ts}}">
+	<input name="Renew_button" id= "Renew_button" type="submit" value="Renew">
+</form>
+<br>
+{% if image_list %}
+	<table border=0>
+		<tr>
+			<td width="500">
+				<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Image</p>
+		  </td>
+			<td width="500">
+				<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Name/URL</p>
+		  </td>
+		</tr>
+	{% for i in image_list %}
+		<tr>
+		  <td> <img src="{{i[1]}}" width="500"></td>
+			<td><p align="center" style="margin-top: 0px; margin-bottom: 0px;"><a href="{{i[2]}}">{{i[0]}}</a></p></td>
+		</tr>
+	{%endfor%}
+	</table>
+{%endif%}
+
+</body>
+</html>

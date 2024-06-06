@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Deribit minimax opened positions</title>
+	<style>
+		table, th, td {
+		  border: 1px solid black;
+		  border-collapse: collapse;
+		}
+	</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1><table><td>Deribit minimax finished trades</td><td align="right"><a href="/minimax">Minimax home</a></td></table></h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}">
+{%for b in bundles%}
+<table>
+	<tr>
+		<td>id</td>
+		<td>status</td>
+		<td>open_date</td>
+		<td>expiration</td>
+		<td>initial_margin</td>
+		<td>initial_value</td>
+		<td>maintenance_margin</td>
+		<td>current_value</td>
+		<td>end_value</td>
+		<td>result</td>
+	</tr>
+	<tr>
+		<td>{{b["id"]}}</td>
+		<td>{% if b["status"] == 1%}open{%else%}close{%endif%}</td>
+		<td>{{b["open_date"]}}</td>
+		<td>{{b["expiration"]}}</td>
+		<td>{{b["initial_margin"]}}</td>
+		<td>{{b["initial_value"]}}</td>
+		<td>{{b["maintenance_margin"]}}</td>
+		<td>{{b["current_value"]}}</td>
+		<td>{{b["end_value"]}}</td>
+		<td>{{b["result"]}}</td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td>instrument</td>
+		<td>status</td>
+		<td>number</td>
+		<td>direction</td>
+		<td>open_date</td>
+		<td>initial_price</td>
+		<td>initial_value</td>
+		<td>initial_margin</td>
+		<td>maintenance_margin</td>
+		<td>current_price</td>
+		<td>current_value</td>
+		<td>close_date</td>
+		<td>end_price</td>
+		<td>end_value</td>
+		<td>result</td>
+	</tr>
+	{%for p in positions%}
+		{%if b["id"] == p["bundle_id"]%}
+		<tr>
+			<td>{{p["instrument"]}}</td>
+			<td>{% if p["status"] == 1%}open{%else%}close{%endif%}</td>
+			<td>{{p["number"]}}</td>
+			<td>{% if p["direction"] == -1%}sell{%else%}buy{%endif%}</td>
+			<td>{{p["open_date"]}}</td>
+			<td>{{p["initial_price"]}}</td>
+			<td>{{p["initial_value"]}}</td>
+			<td>{{p["initial_margin"]}}</td>
+			<td>{{p["maintenance_margin"]}}</td>
+			<td>{{p["current_price"]}}</td>
+			<td>{{p["current_value"]}}</td>
+			<td>{{p["close_date"]}}</td>
+			<td>{{p["end_price"]}}</td>
+			<td>{{p["end_value"]}}</td>
+			<td>{{p["result"]}}</td>
+		</tr>
+		{%endif%}
+	{%endfor%}
+</table>
+{%endfor%}
+</form>
+
+</body>
+</html>
+
+ 

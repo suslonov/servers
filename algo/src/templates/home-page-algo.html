@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Algorithms run history</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Algorithms run history</h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}">
+<table border=0>
+	<tr>
+		<td>
+			<select name="alg_name">
+				{% for a in algorithms_list %}
+				{% if alg_name == a[1] %}
+					<option value="{{a[1]}}" selected="selected">{{a[1]}}</option>
+				{% else %}
+					<option value="{{a[1]}}">{{a[1]}}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</td>
+		<td>
+	  		<input name="SubmitAlgName" id= "Submit" type="submit" value="Runs list">
+		</td>
+		<td>
+	  		<input name="AlgNameCode" id= "SubmitCode" type="submit" value="Show code">
+		</td>
+	</tr>
+</table>
+</form>
+
+<br>
+{% if runs_list %}
+<table border=1>
+	<tr>
+		<td width="100">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Run at</p>
+	  	</td>
+		{% for p in params_list %}
+		<td width="100">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{p[0]}} = {{p[1]}}</p>
+	  	</td>
+		{%endfor%}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Run parameters</p>
+	  	</td>
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Algorithm metrics</p>
+	  	</td>
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Comment</p>
+	  	</td>
+	</tr>
+	{% for r in runs_list %}
+	<tr>
+		<td width="100">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;"> <a href="./run/{{r[0]}}">{{r[1]}}</a></p>
+	  	</td>
+		{% for p in params_list %}
+		<td width="100">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r[3][p[1]]}}</p>
+	  	</td>
+		{%endfor%}
+		<td>
+			<table>
+			<tr>
+				{% for r2 in r[2] %}
+				<td>
+					<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r2}}</p>
+			  	</td>
+				{%endfor%}
+			</tr>
+			<tr>
+				{% for r2 in r[2] %}
+				<td>
+					<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r[2][r2]}}</p>
+			  	</td>
+				{%endfor%}
+			</tr>
+			</table>
+	  	</td>
+		<td>
+			<table>
+			<tr>
+				{% for r4 in r[4] %}
+				<td>
+					<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r4}}</p>
+			  	</td>
+				{%endfor%}
+			</tr>
+			<tr>
+				{% for r4 in r[4] %}
+			  <td>
+					{% if r4[-3:] == '(%)' %}
+					<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{'{0:.4%}'.format(r[4][r4])}}</p>
+				  {% else %}
+				  <p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{'{0:.10}'.format(r[4][r4])}}</p>
+				  {% endif %}
+			  </td>
+				{%endfor%}
+			</tr>
+			</table>
+	  	</td>
+	  	<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r[5]}}</p>
+		</td>
+	</tr>
+	{%endfor%}
+</table>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Covered calls calculator</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>{{symbol}} covered calls calculator</h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}" onSubmit="button_onclick()">
+<table border=0>
+	<tr>
+		<td width="400">
+			<strong>Symbol</strong> 
+			<input name="symbol" id="symbol" type="text" value="{{symbol}}">
+	  		<input name="SubmitButton" id= "symbol_renew" type="submit" value="CheckSymbol">
+		</td>
+		<td rowspan="3">
+			{{description}}
+		</td>
+	</tr>
+	<tr>
+		<td width="400">
+			<strong>Risk free rate</strong> 
+			<input name="risk_free" id="risk_free" type="text" value="{{risk_free}}">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<strong>{{symbol}} trend</strong> 
+			<input name="trend" id="trend" type="text" value="{{trend}}">
+		</td>
+	</tr>
+	<tr>
+		<td>
+		  <div align="center"><strong>Use historical volatility/</strong></div>
+		    <div align="right"><strong>use at-the-money implied volatility</strong></div>
+		<td>
+			{%if hist_vol%}
+				<div align="center">
+				  <input type="radio" name="volatility" value="hist_vol" checked>
+				  <br>
+					<input type="radio" name="volatility" value="implied_vol">
+				</div>
+			{%else%}
+				<div align="center">
+				  <input type="radio" name="volatility" value="hist_vol">
+				  <br>
+					<input type="radio" name="volatility" value="implied_vol" checked>
+				</div>
+			{%endif%}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div align="right"><strong>Suppose trade session is open</strong>
+	        </div></td>
+		<td>
+			<div align="center">
+			{%if alwais_open%}
+			  <input name="alwais_open" type="checkbox" value="" checked>
+			{%else%}
+			  <input name="alwais_open" type="checkbox" value="" >
+			{%endif%}
+	    </div></td>
+	</tr>
+	<tr>
+		<td>
+			<div align="right"><strong>Use theoretical prices</strong>
+	        </div></td>
+		<td>
+			<div align="center">
+			{%if bs_prices%}
+			  <input name="bs_prices" type="checkbox" value="" checked>
+			{%else%}
+			  <input name="bs_prices" type="checkbox" value="" >
+			{%endif%}
+	    </div></td>
+	</tr>
+	<tr>
+		<td>
+			<div align="right"><strong>Chart output</strong>
+	        </div></td>
+		<td>
+			<div align="center">{%if chart_output%}
+			  <input name="chart_output" type="checkbox" value="" checked>
+			{%else%}
+			  <input name="chart_output" type="checkbox" value="" >
+			{%endif%}
+	    </div></td>
+	</tr>
+		<td><div align="right" style="color:#FF0000"><strong>it can take approximately 1 minute -&gt; </strong></div></td>
+		<td>
+	  		<input name="SubmitButton" id= "Submit" type="submit" value="RunCalculation">
+		</td>
+	</tr>
+</table>
+</form>
+
+{%if mid_price %}
+<h2>{%if in_session %} Trade session is open {%else%} Trade session is closed {%endif%}</h2>
+<h2>The current {{symbol}} price is {{mid_price}}, 30-days volatility is {{historical_volatility}}</h2>
+{%endif%}
+{%if output_table %} 
+<div id="results_table">
+<table border=1>
+		<tr>
+			<td>
+				Date
+			</td>
+			<td>
+				Term
+			</td>
+			<td>
+				IV
+			</td>
+			<td>
+				Best strike
+			</td>
+			<td>
+				Expectation
+			</td>
+			<td>
+				Best out of money strike
+			</td>
+			<td>
+				Expectation
+			</td>
+		</tr>
+	{% for d in output_table %}
+		<tr>
+			<td>
+				{{d}}
+			</td>
+			<td>
+				{{output_table[d]["term"]}}
+			</td>
+			<td>
+				{{output_table[d]["IV"]}}
+			</td>
+			<td>
+			<div align="right">{{output_table[d]["Best strike"]}} </div></td>
+			<td>
+				{{output_table[d]["Expectation for the best strike"]}}
+			</td>
+			<td>
+			<div align="right">{{output_table[d]["Best out of money strike"]}} </div></td>
+			<td>
+				{{output_table[d]["Expectation for the best out of money strike"]}}
+			</td>
+		</tr>
+	{%endfor%}
+</table>
+</div>
+{%endif%}
+<br>
+{%if chart_data %}
+{%if chart_output %}
+
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	  google.charts.load('current', {'packages':['corechart']});
+	  google.charts.setOnLoadCallback(drawChart);
+	
+	  function drawChart() {
+		var data0 = google.visualization.arrayToDataTable([
+			['strike', {% for dd in chart_data[0][1:] %} '{{dd}}', {% endfor %}], 
+		  {% for d in chart_data[1:] %}
+			  [{% for dd in d %}  {% if dd != dd %}null{%else%}{{dd}}{%endif%}, {% endfor %}], 
+		  {% endfor %}
+		]);
+	
+		var options = {
+		  chartArea: {
+			left:10,
+			top:10,
+			width:'100%',
+			height:'85%',
+			},
+			vAxis:{
+				baseline: 0,
+				viewWindowMode: "explicit",
+				textPosition: 'in',
+				},
+		  explorer: {actions: ['dragToPan', 'dragToZoom', 'rightClickToReset']},
+		  legend: { position: 'bottom' },
+		  interpolateNulls: true,
+		};
+	
+		var chart0 = new google.visualization.LineChart(document.getElementById('covered_calls_chart'));
+		chart0.draw(data0, options);
+	
+	  }
+	</script>
+
+	<div id="covered_calls_chart" style="width: 900px; height: 500px"></div>
+{%else%}
+	<table border="0">
+		{%for r in chart_data%}
+			<tr>
+				{%for rr in r%}
+					<td>
+						{{rr}}
+					</td>
+				{%endfor%}
+			</tr>
+		{%endfor%}
+	</table>
+{%endif%}
+{%endif%}
+
+<script type="text/javascript" language="JavaScript">
+function button_onclick(){
+	var obj = document.getElementById("results_table");
+	obj.setAttribute('style', "background-color:#AAAAAA");
+}
+
+</script>
+</body>
+</html>

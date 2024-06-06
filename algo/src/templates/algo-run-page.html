@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Algorithm run record</title>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+	  ['Date', "benchmark_period_return", "algorithm_period_return"],
+	  {% for d in chart_values %}
+	  [{{d[0]}}, {{d[1]}}, {{d[2]}}],
+	  {% endfor %}
+	]);
+
+	var options = {
+	  chartArea: {left:10,top:10,width:'100%',height:'85%'},
+	  explorer: {actions: ['dragToPan', 'dragToZoom', 'rightClickToReset']},
+	  legend: { position: 'bottom' }
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('alg_chart'));
+	chart.draw(data, options);
+  }
+</script>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Algorithm: {{alg_name}}</h1>
+<table border=1>
+	<tr>
+		<td width=100>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Run at</p>
+	  	</td>
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{run_data[1]}}</p>
+	  	</td>
+	  	<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{run_data[5]}}</p>
+	  	</td>
+	</tr>
+</table>
+<h2>Algorithm parameters</h2>
+<table border=1>
+	<tr>
+		{% for p in run_data[3] %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{p}}</p>
+	  	</td>
+		{%endfor%}
+	</tr>
+	<tr>
+		{% for p in run_data[3] %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{run_data[3][p]}}</p>
+	  	</td>
+		{%endfor%}
+	</tr>
+</table>
+<h2>Run parameters</h2>
+<table border=1>
+	<tr>
+		{% for r2 in run_data[2] %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r2}}</p>
+		</td>
+		{%endfor%}
+	</tr>
+	<tr>
+		{% for r2 in run_data[2] %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{run_data[2][r2]}}</p>
+		</td>
+		{%endfor%}
+	</tr>
+</table>
+<h2>Algorithm metrics</h2>
+<table border=1>
+	<tr>
+		{% for r4 in run_data[4] %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{r4}}</p>
+		</td>
+		{%endfor%}
+	</tr>
+	<tr>
+		{% for r4 in run_data[4] %}
+	  <td>
+			{% if r4[-3:] == '(%)' %}
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{'{0:.4%}'.format(run_data[4][r4])}}</p>
+		  {% else %}
+		  <p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{'{0:.10}'.format(run_data[4][r4])}}</p>
+		  {% endif %}		</td>
+		{%endfor%}
+	</tr>
+</table>
+{% if x_values %}
+<div id="alg_chart" style="width: 900px; height: 500px"></div>
+<h2>Algorithm run by days</h2>
+<table border=1>
+	<tr>
+		{% for col in x_columns %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{col}}</p>
+		</td>
+		{% endfor %}
+	</tr>
+	{% for r in x_values %}
+	<tr>
+		{% for rr in r %}
+		<td>
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{rr}}</p>
+		</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+{% else %}
+<h2>no data saved for this run</h2>
+{% endif %}
+<h2>Algorithm text output</h2>
+<textarea name="text_output" cols="" rows="" style="height: 1000px; max-height:1000; width:100%">{{text_output}}</textarea>
+
+</body>
+</html>

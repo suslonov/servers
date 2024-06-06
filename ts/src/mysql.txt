@@ -1,0 +1,142 @@
+'mysqlpass' - use own pass
+mysql -u root -p
+mysql -u root (if root)
+
+create database ts_proto;
+create user 'ts'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ts_proto';
+grant all on ts_proto.* to 'ts'@'localhost';
+
+mysql -u ts -p
+
+use ts_proto;
+create table t_sessions (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), userid varchar(50));
+ALTER TABLE t_sessions MODIFY COLUMN userid VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+create index i_s_index1 on t_sessions (sessionid);
+
+create table t_data_str (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), rowname varchar(50), tsstr varchar(255));
+create table t_data_int (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), rowname varchar(50), tsint int);
+create table t_data_dec (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), rowname varchar(50), tsdec decimal(18,4));
+create table t_data_date (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), rowname varchar(50), tsdate date);
+create table t_data_text (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), rowname varchar(50), tstext TEXT);
+ALTER TABLE t_data_str MODIFY COLUMN tsstr VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE t_data_text MODIFY COLUMN tstext VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+create index i_ds_index1 on t_data_str (sessionid, rowname);
+create index i_di_index1 on t_data_int (sessionid, rowname);
+create index i_dd_index1 on t_data_dec (sessionid, rowname);
+create index i_dd_index2 on t_data_date (sessionid, rowname);
+create index i_dt_index2 on t_data_text (sessionid, rowname);
+
+create table t_ts (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, sessionid varchar(50), algname varchar(50), ts float);
+create index i_t_index1 on t_ts (sessionid, algname);
+
+create table t_rows (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, rowname varchar(50), rowtype int, roworder int, rowtext varchar(255), rowcomment varchar(255), color int);
+create index i_r_index1 on t_rows (rowname);
+
+create table t_row_options (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, rowname varchar(50), optnum int, rowoption varchar(50));
+create index i_ro_index1 on t_row_options (rowname, optnum);
+
+create table t_algs(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, algname varchar(50), stepnum int, stepname varchar(50), steptype int);
+create index i_a_index1 on t_algs (algname, stepnum, stepname);
+
+delete from t_algs;
+delete from t_rows;
+delete from t_row_options;
+delete from t_sessions;
+delete from t_data_str;
+delete from t_data_int;
+delete from t_data_dec;
+delete from t_data_date;
+delete from t_data_text;
+delete from t_ts;
+
+0 - string,
+1 - checkbox,
+2 - select,
+3 - integer,
+4 - decimal,
+5 - date,
+6 - country,
+25 - text
+
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Identification', 2, 1, 'KYC identification type', 'KYC (Know Your Client) is obligatory for a payment system. All other data is irrellevant if the client is not identified. (No_Documentation/Passport/National ID/False Documentation)', 1);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Citizenship', 6, 2, 'Your citizenship', 'Your country of citizenship according to KYC?', 1);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('ZIP_code', 0, 3, 'ZIP Code', 'Please enter your zip/postal code.', 1);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Date_of_birth', 5, 4, 'Birthday', 'Please enter your birth date', 1);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Investor', 1, 101, 'COTI investor', 'Please supply a possible amount in USD if you plan to keep COTI as an investment', 2);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Stake', 4, 102, 'COTI investor', 'Please supply a possible amount in USD if you plan to keep COTI as an investment', 2);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Proof_of_residence', 1, 103, 'Proof of Residence', 'Are you agree to send us Proof of Residence? (Utility bill or something like this.) It is important if you plan to transfer substantial amounts', 2);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Country', 6, 104, 'Country', 'In which country do you live?', 1);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Phone', 1, 105, 'Confirm phone number', 'Are you agree to confirm your phone number?', 2);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Marital_status', 2, 201, 'Family status', 'Single / Married or in permanent relation', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Children', 2, 202, 'Children', 'None/Raising children/Have grandchildren', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Education', 2, 203, 'Education', 'What is your highest level of education? (None/Elementary/Secondary/ Bachelor/Master/PhD)', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Employment_status', 2, 301, 'Employment status', 'Employed/ Self-Employed/ Retired/ Student/ Unemployed', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Occupation', 0, 302, 'Occupation', 'Please enter short description of your main occupation and position', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Income_source_declared', 1, 303, 'Income source declared', 'Can you disclose your income source? This information is required in order to transfer large sums of money', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Stable_income', 1, 304, 'Stable income', 'Does the user have a stable income like a salary?', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Income', 2, 305, 'Monthly income in USD', 'Please fill if you can disclosure your income sources. This information is required in order to transfer large sums of money', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Has_license', 1, 401, 'Driver license', 'Do you have a driver''s license?', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Insurance', 1, 402, 'Insurance', 'What types of insurance do you have in addition to standard car insurance (e.g. life insurance)?', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Social_network_account', 1, 403, 'Social network account', 'Please enter the name of your social media account', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Site', 1, 404, 'Internet site', 'Please enter the URL of your website', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Bank_account', 0, 405, 'Bank statement', 'If you plan to be a merchant, please check the box if you can agree to disclosure us your business account bank statement', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Bank_reference', 0, 406, 'Bank or auditor reference', 'If you have a bank, auditor, or any other relevant reference, please provide their name below', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Credit_card_holder', 1, 407, 'Credit cards', 'Do you have credit cards? (This will be confirmed securely)', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Credit_history', 1, 408, 'Credit history', 'Are we authorized to verify your credit history? (For credit card holders.)', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Fill_date', 5, 501, 'Fill date', 'The date of questionnaire filling to demonstrate the decay of the Trust Score over time', 0);
+INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('Comment', 25, 502, 'Comment', 'Please write your suggestions here', 0);
+
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('credit_score', 3, 209, 'Credit score', 'General credit scoring range');
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('be_merchant', 1, 301, 'Merchant', 'You have to be a merchant if you plan to sell goods or services. If you want to be a merchant, you will have to supply additional data for the Trust Score');
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('company_owner', 1, 302, 'Merchant company', 'Do you plan to be a merchant as a limited liability company?');
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('was_fraud', 1, 401, 'Frauds', 'This field is to show how committing frauds affects the Trust Score');
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('last_fraud', 5, 402, 'Last fraud date', 'The date of last frode commited to demonstrate the limitation term effect');
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('merch_turn', 4, 303, 'Merchant turnover', 'What is your average monthly turnover as a merchant? (in USD)');
+--INSERT INTO t_rows (rowname, rowtype, roworder, rowtext, rowcomment, color) VALUES ('incorporation_date', 5, 305, 'Incorporation date', 'When you have started your business? (Please enter the year)');
+
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ("Education", 0, "Not_educated");
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ("Education", 1, "Elementary");
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ("Education", 2, "Secondary");
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ("Education", 3, "Bachelor");
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ("Education", 4, "Master");
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ("Education", 5, "PhD_Doctorate");
+
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Identification', 0, 'Not_provided');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Identification', 1, 'Passport');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Identification', 2, 'National_ID');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Identification', 3, 'False_documentation');
+
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Marital_status', 0, 'Single');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Marital_status', 1, 'Married');
+
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Children', 0, 'None');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Children', 1, 'Raising_children');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Children', 2, 'Have_grandchildren');
+
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Employment_status', 0, 'None');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Employment_status', 1, 'Employed');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Employment_status', 2, 'Self_employed');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Employment_status', 3, 'Retired');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Employment_status', 4, 'Student');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Employment_status', 5, 'Unemployed');
+
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 0, 'None');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 1, '$0-$1000');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 2, '$1000-$2000');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 3, '$2000-$4000');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 4, '$4000-$8000');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 5, '$8000-$16000');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 6, '$16000-$32000');
+INSERT INTO t_row_options (rowname, optnum, rowoption) VALUES ('Income', 7, '$32000+');
+
+INSERT INTO t_algs (algname, stepnum, stepname, steptype) VALUES ("ITSA_I1", 1, "Preprocessing + Counting", 0);
+INSERT INTO t_algs (algname, stepnum, stepname, steptype) VALUES ("ITSA_A2", 1, "Preprocessing + Basketing + Counting", 0);
+
+SHOW VARIABLES LIKE "secure_file_priv";
+create table t_countries (id INT NOT NULL PRIMARY KEY, iso varchar(2), name varchar(255), iso3 varchar(3), numcode int, prefix int, gci float, block_status int);
+LOAD DATA INFILE "/var/lib/mysql-files/countries.csv" INTO TABLE t_countries FIELDS TERMINATED BY ',' IGNORE 1 ROWS;
+update t_countries set name = Replace(name, ';', ',');
+
+SELECT * INTO OUTFILE "/var/lib/mysql-files/t_countries.csv" FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' FROM t_countries;
+
+create table t_requests_log (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, url varchar(255), api varchar(50), type varchar(10), req_data text, reply text);

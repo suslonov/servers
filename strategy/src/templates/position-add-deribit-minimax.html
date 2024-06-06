@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Deribit minimax opened positions</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1><table><td>Deribit minimax opened positions</td><td align="right"><a href="/minimax">Minimax home</a></td></table></h1>
+{%if not bundle_id%}
+	<form name="datainput" id="datainput" method="post" action="{{sub_path}}">
+	<table border=0>
+		<tr>
+			<td></td>
+			<td>open_date</td>
+			<td>trade expiration</td>
+		</tr>
+		<tr>
+			<td>Trade bundle:</td>
+			<td><input name="open_date" id="open_date" type="text" value="{{open_date}}"></td>
+			<td><input name="expiration" id="expiration" type="text" value=""></td>
+		</tr>
+		<tr>
+			<td><strong>Positions:</strong></td>
+		</tr>
+		<tr>
+			<td>instrument</td>
+			<td>number</td>
+			<td>direction</td>
+			<td>open</td>
+			<td>initial_price</td>
+			<td>initial_margin</td>
+		</tr>
+		{%for p in bundle%}
+			<tr>
+				<td><input name="instrument{{p}}" id="instrument{{p}}" type="text" value="" list="instruments"/></td>
+				<td><input name="number{{p}}" id="number{{p}}" type="text" value=""></td>
+				<td><input name="direction{{p}}" id="direction{{p}}" type="text" value=""></td>
+				<td><input name="open_date{{p}}" id="open_date{{p}}" type="text" value=""></td>
+				<td><input name="initial_price{{p}}" id="initial_price{{p}}" type="text" value=""></td>
+				<td><input name="initial_margin{{p}}" id="initial_margin{{p}}" type="text" value=""></td>
+			</tr>
+		{%endfor%}
+	</table>
+	<input name="EnterPosition" id= "Submit" type="submit" value="EnterPosition">
+	</form>
+{%else%}
+	<table border=0>
+		<tr>
+			<td></td>
+			<td>open_date</td>
+			<td>expiration</td>
+		</tr>
+		<tr>
+			<td>Bundle:{{bundle_id}}</td>
+			<td>{{open_date}}</td>
+			<td>{{expiration}}</td>
+		</tr>
+		<tr>
+			<td><strong>Positions:</strong></td>
+		</tr>
+		<tr>
+			<td>instrument</td>
+			<td>number</td>
+			<td>direction</td>
+			<td>open_date</td>
+			<td>initial_price</td>
+			<td>initial_margin</td>
+		</tr>
+		{%for p in bundle%}
+			<tr>
+				<td>{{p["instrument"]}}</td>
+				<td>{{p["number"]}}</td>
+				<td>{%if p["direction"] == -1%}sell{%else%}buy{%endif%}</td>
+				<td>{{p["open_date"]}}</td>
+				<td>{{p["initial_price"]}}</td>
+				<td>{{p["initial_margin"]}}</td>
+			</tr>
+		{%endfor%}
+	</table>
+{%endif%}
+
+<datalist id="instruments">
+	{%for i in instruments%}
+	   <option>{{i}}</option>
+	{%endfor%}
+</datalist>
+
+</body>
+</html>

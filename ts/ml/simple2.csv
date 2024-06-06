@@ -1,0 +1,24 @@
+Number,Name,sid,TargetBasket,TargetTS,Shift of the center,Frequency,id_type,location_country,zip_code,age,por_available,confirm_phone,social_network,family_status,children,education,occupation,driver_lic,insurance_available,site_owner,investor,bank_reference,stable_income,income_source_declared,income,cards_available,credit_history,credit_score,be_merchant,company_owner,was_fraud,chargebacks_stats,disputes_stats,balance_coti,turnover_coti,centrality,merch_turn,bank_account,business_age,refunds_stats
+1,,,,10,0,100,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+2,,,,20,0,100,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+3,,,,30,0,100,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+4,,,,40,0,100,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+5,,,,50,0,100,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+6,,,,60,0,100,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+7,,,,70,0,100,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+8,,,,80,0,100,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+9,,,,90,0,100,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+10,,,,100,0,100,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+11,,,,110,0,100,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+12,,,,120,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+13,,,,130,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+14,,,,140,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+15,,,,150,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+16,,,,160,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+17,,,,170,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1000,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+18,,,,180,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+19,,,,190,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None,None
+20,,,,200,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None,None
+21,,,,210,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None,None
+22,,,,220,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None,None
+23,,,,230,0,100,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,1,None,None,None,None,None,None,None,None,None

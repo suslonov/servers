@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Vega hedge with Theta rate</title>
+    <style type="text/css">
+<!--
+.style2 {font-size: 12px}
+-->
+    </style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Vega hedge with Theta rate</h1>
+
+<h2>Basic amount = {{capital}} USD</h2>
+<h2>BTC</h2>
+<div class="style2">
+<table border=0>
+	<tr>
+	{% for c in data["BTC"][0]%}
+		<td>{{c}}</td>
+	{%endfor%}
+	</tr>
+	{% for r in data["BTC"]%}
+	<tr>
+		{% for c in r%}
+			<td>{{r[c]}}</td>
+		{%endfor%}
+	</tr>
+	{%endfor%}
+</table>
+</div>
+<br>
+<h2>ETH</h2>
+<div class="style2">
+<table border=0>
+	<tr>
+	{% for c in data["ETH"][0]%}
+		<td>{{c}}</td>
+	{%endfor%}
+	</tr>
+	{% for r in data["ETH"]%}
+	<tr>
+		{% for c in r%}
+			<td>{{r[c]}}</td>
+		{%endfor%}
+	</tr>
+	{%endfor%}
+</table>
+</div>
+
+</body>
+</html>

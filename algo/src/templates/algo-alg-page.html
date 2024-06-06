@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Algorithm code</title>
+</head>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         <p style="white-space: pre-wrap">{{ message }}</p>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Algorithm: {{alg_name}}</h1>
+{% for c in code %}
+	{% if c.strip()[0] == '#' %}
+		<p style="white-space: pre-wrap; margin-top: 0px;margin-bottom: 0px; color:#990000">{{c}}</p>
+	{% elif c.strip()[0:3] == 'def' or c.strip()[0:5] == 'class' %}
+		<p style="white-space: pre-wrap; margin-top: 0px;margin-bottom: 0px; font-weight:bold">{{c}}</p>
+	{% else %}
+		<p style="white-space: pre-wrap; margin-top: 0px;margin-bottom: 0px;">{{c}}</p>
+	{% endif %}
+{% endfor %}
+
+</body>
+</html>

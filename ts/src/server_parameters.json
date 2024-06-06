@@ -1,0 +1,2 @@
+{    "URLS": {"ITSA_A2": "http://0.0.0.0:8021/calculate_initial_TS",
+    "ITSA_I1": "http://0.0.0.0:8022/calculate_initial_TS"} }

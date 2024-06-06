@@ -1,0 +1,9 @@
+Thu Jun 28 16:13:30 IDT 2018
+{
+  "user_ID": "ABCDE"
+}
+{"user_ID":"ABCDE"}
+{"TS":"34.8344226044226","alpha":"0.01","balance":"10000000","beta":"1","time_joined":"2018-06-27T14:40:22.675042","time_last_turn_adj":"2018-06-27T14:40:22.675042","time_prev_txn":"2018-06-27T14:40:22.675042","txns_last_maj_wrong":"10000","txns_last_min_wrong":"10000"}
+{"TS":27.485841523341524,"balance":10000,"time_joined":"2018-06-27T15:04:58.746600","time_last_turn_adj":"2018-06-27T15:04:58.746600","time_prev_txn":"2018-06-27T15:04:58.746600","user_ID":"peter"}
+{"user_ID":"peter"}
+Thu Jun 28 16:13:30 IDT 2018

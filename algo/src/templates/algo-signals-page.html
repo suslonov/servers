@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Algorithm signals</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<h1>Algorithm signals</h1>
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}signals">
+<table border=0>
+	<tr>
+		<td>
+			<select name="alg_name" onChange="this.form.submit()">
+				{% for a in algorithms_list %}
+				{% if alg_name == a[1] %}
+					<option value="{{a[1]}}" selected="selected">{{a[1]}}</option>
+				{% else %}
+					<option value="{{a[1]}}">{{a[1]}}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</td>
+		<td>
+	  		<input name="AlgNameCode" id= "SubmitCode" type="submit" value="Show code">
+		</td>
+	</tr>
+</table>
+</form>
+
+<br>
+{% if s_list %}
+<table border=2>
+	{% for s in s_list %}
+	<tr>
+		<td>
+			<b><p>Signals calculated at (Jerusalem time): {{s[0]}}</p>
+			</b>
+		  <p><b>Signals as on (EST time) : {{s[1]}}<br>
+		  live market data = {% if s[4] %}<span style="color:#F00000;">True</span>{% else %}False{% endif %}</b></p>
+			<p>Comment<br>
+			{{s[2]}}</p>
+			<p>Algorithm_parameters<br>
+			{{s[3]}}</p>
+			<b>Signals:</b><br>
+			{% for l in s[5] %}
+		  <p>{{l[0]}}<br>
+				{% if l[1] == 'True' or l[1] == 'False' %}<b>{{l[1]}}</b>{% else %}{{l[1]}}{% endif %}</p>
+			{%endfor%}
+  	  </td>
+	</tr>
+	{%endfor%}
+</table>
+
+<form name="ShowMore" id="ShowMore" method="post" action="{{sub_path}}moresignals">
+	<table border=0>
+		<tr>
+			<td>
+				From: <input name="SignalsFrom" type="text" value="0">
+			</td>
+			<td>
+				To: <input name="SignalsTo" type="text" value="100">
+			</td>
+		</tr>
+	</table>	
+	<input name="AlgNameMore" type="hidden" value="{{alg_name}}">
+	<input name="MoreSignals" id= "MoreSignals" type="submit" value="Show more signals">
+</form>
+
+
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+	<title>Bitcoin volatility and options</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<form name="datainput" id="datainput" method="post" action="{{sub_path}}">
+<table border=0>
+	<tr>
+		<td>
+			<input type="text" name="term" value="{{params["term"]}}" align="right" style="text-align:right"> Option maturity term, days<br>
+			<input type="text" name="strike_price" value="{{params["strike_price"]}}" align="right" style="text-align:right"> Option strice price<br>
+			<input type="text" name="risk_free_rate" value="{{params["risk_free_rate"]}}" align="right" style="text-align:right">% Risk-free rate<br>
+{% if params["option_type_button"] == 1 %}
+			<input name="option_type_button" type="radio" value="Call" checked="checked"> Call<br>
+			<input name="option_type_button" type="radio" value="Put"> Put<br>
+{%else%}
+			<input name="option_type_button" type="radio" value="Call"> Call<br>
+			<input name="option_type_button" type="radio" value="Put" checked="checked"> Put<br>
+{%endif%}
+		</td>
+		<td>
+	  		<input name="SubmitC" id= "Submit" type="submit" value="Calculate">
+		</td>
+	</tr>
+</table>
+</form>
+
+<table border=0>
+	<tr>
+		<td>
+			<p><label>European type option price is </label> <input name="e_price" type="text" value="{{e_price}}" align="right" style="text-align:right"></p>
+		</td>
+		<td>
+			<form name="Renew" id="Renew" method="post" action="{{sub_path}}renew">
+				<input name="Renew" id= "Renew" type="submit" value="Renew data">
+			</form>
+		</td>
+	</tr>
+</table>
+
+<br>
+<table border=0>
+	<tr>
+		<td width="100">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Date</p>
+	  </td>
+		<td width="120">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Price</p>
+	  </td>
+		<td width="300">
+			<p align="center" style="margin-top: 0px; margin-bottom: 0px;">Volatility (%% annually, window = term)</p>
+	  </td>
+	</tr>
+{% for dv in dpv_list %}
+	<tr>
+		<td><p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{dv[0]}}</p></td>
+		<td><p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{dv[1]}}</p></td>
+		<td><p align="center" style="margin-top: 0px; margin-bottom: 0px;">{{dv[2]}}</p></td>
+	</tr>
+{%endfor%}
+</table>
+
+</body>
+</html>
