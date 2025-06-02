@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/static/style.css" />
+<title>Dynamic bidirectional GRU(char) description</title>
+</head>
+
+<body style="width:1000px;">
+<p class="nn_h1">Recurrent neural network, GRU cell, dynamic, bidirectional, with char-by-char input.</p>
+<p>In this examle I trained dynamic bidirectional GRU network.</p>
+<p>This is the structure of recurrent neural network:</p>
+<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-unrolled.png" width="600">
+<p class="linktosource">ref: <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></p>
+<p>Then we use dynamic RNN, we don't create all this chain in memory, but use one instance of cell in the loop.</p>
+<p>GRU is simplified LSTM cell:</p>
+<img src="https://qph.ec.quoracdn.net/main-qimg-d4725497028c5a60241e1524c32f60de.webp" width="600">
+<p>Full model:</p>
+<img src="/img/RNN2.png" width="300">
+</body>
+</html>

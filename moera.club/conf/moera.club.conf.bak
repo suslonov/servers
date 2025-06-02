@@ -1,0 +1,34 @@
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/moera/root;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name *.moera.club;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+	location /.well-known {
+	}
+}
+
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/moera/root;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name moera.club;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+        location /.well-known {
+        }
+}
+

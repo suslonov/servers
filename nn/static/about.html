@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/static/style.css" />
+<title>About the project</title>
+</head>
+
+<body style="width:1000px;">
+<p class="nn_h2">What is this </p>
+<p>This site is a collection of several <strong>neural network NLP models</strong>, pretrained with different sets of parameters.</p>
+<p>Models in the collection are designed for simulate human ability to quickly see the text and form some opinion “at glance”. (Or may be it is more similar to dog's ability to understand their master's commands, if dog could receive written commands.)</p>
+<p>These models were trained, some for hours, some for days, using an Nvidia card.</p>
+<p>The dataset used was nltk.wordnet, very large semantic net of English words.</p>
+<p>Neural networks at the site are not training, they do only classification of given examples.</p>
+<p>The parameters you can see in list may be suboptimal. It will take some time to found the best ones.</p>
+<p class="nn_h2">The task</p>
+<p>Problem:<strong> build neural network could be trained to classify English sentences according to its domains</strong>.</p>
+<p>For example, if the neural network sees “colibri has nothing to deal with a pine” input, it should answer what it is about birds, trees, biology but not about cars, humans or credit cards.</p>
+<p>So, we need our neural network assign probabilities to the list of possible categories, ideally all correct answers should have topmost probabilities. It is standard <strong>softmax output layer</strong>.</p>
+<p>Because input of the model is sequence, our natural choice is <strong>recurrent neural network</strong> before softmax. You can see several variants of them on this site.</p>
+<p>The sentence our neural network should classify may be represented in two ways: as a sequence of chars and as a sequence of words. Both works, but word-wise approach demands more preprocessing not only at training stage and about five times more storage. Moreover, because word-wise approach implies that the models have a dictionary of tens of thousand words, such model will simply work as a bag-of-words regression and do no generalisation. It works, but it is not interesting.</p>
+<p>To be clear, these models do not understand natural language, they are only possibly useful block in building of NL-interface.</p>
+<p class="nn_h2">How to use this site</p>
+<p>1) please enter some short sentence which classification may be interest or funny,</p>
+<p>2) select up to 3 NN variants from the list of NNs,</p>
+<p>It is recommended to select to compare somewhat similar models:</p>
+<p> - or same type models with different parameters,</p>
+<p> - or different types models with similar parameters.</p>
+<p>You may click to model name in the table to see model details and description.</p>
+<p>3) press “Classify” and wait a little,</p>
+<p>4) see 3 columns with classification possibilities below the NN list.</p>
+<p>The header of each result column is a coded description of the NN model responsible for the column.</p>
+<p>Numbers in the columns are possibilities of the related category (softmax output).</p>
+<div id="inputideas">
+<p class="nn_h2">You may try following sentences for example:</p>
+</div>
+<p>bird</p>
+<p>small eagle</p>
+<p>rose on the tree was very nice</p>
+<p>flying is for birds</p>
+<p>is this a bus?</p>
+<p>my brother with a motor</p>
+<p>do you want to kiss the sky</p>
+<p>colibri has nothing to deal with a pine</p>
+<p>...</p>
+<p>Or you may see what other people ask: <a href="/nn/log" target="_blank">Request log</a></p>
+<br>
+<p class="nn_h2">What is this all for</p>
+<p>The NN module build like one of these models planned to be used as pre-classification module in AI user adviser.</p>
+<p>It may raise up efficiency of analyzing text data, for example detecting of unusual and fraudulent transactions in bank statements.</p>
+<br>
+<img src="/img/picture for site-nn.png" width="900">
+<br>
+<p>The NN framework used is <a href="https://www.tensorflow.org/">TensorFlow</a>.</p>
+<p align="right" class="nn_h1"><img src="/img/fenek.gif" width="95"></p>
+</body>
+</html>

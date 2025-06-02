@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/static/style.css" />
+<title>Fields description</title>
+</head>
+
+<body style="width:1000px">
+<p class="nn_h1">Description of columns in NNs table</p>
+<div id="train_data">
+<p class="nn_h2">Train data</p></div>
+<p>Sources of data for NN training:</p>
+<p>w[ordnet] - nltk Wordnet corpus. For each category in list we selected subtree of all hyponims and meronims, recursivly.</p>
+<p>c[ola] - selection from Corpus of Contemporary American English http://corpus.byu.edu/coca/</p>
+<p>As usual, 10% of data is used as a test set.</p>
+<div id="neural_network">
+<p class="nn_h2">Neural network</p></div>
+<p>Model type/architecture</p>
+<p>Now awailable:</p>
+<p><a href="s-lstm-char.html">s-lstm-char</a> - Recurrent neural network, LSTM cell, static, with char-by-char input</p>
+<p><a href="s-gru-char.html">s-gru-char</a> - Recurrent neural network, GRU cell, static, with char-by-char input (not implemented yet)</p>
+<p><a href="d-lstm-char.html">d-lstm-char</a> - Recurrent neural network, LSTM cell, dynamic, with char-by-char input</p>
+<p><a href="d-gru-char.html">d-gru-char</a> - Recurrent neural network, GRU cell, dynamic, with char-by-char input</p>
+<p><a href="d-lstm-word.html">d-lstm-word.html</a> - Recurrent neural network, LSTM cell, with word embedding</p>
+<p><a href="d-gru-word.html">d-gru-word.html</a> - Recurrent neural network, GRU cell, with word embedding</p>
+<p><a href="bi-lstm-char.html">bi-lstm-char</a> - Recurrent bidirectional neural network, LSTM cell, with char-by-char input</p>
+<p><a href="bi-gru-char.html">bi-gru-char</a> - Recurrent bidirectional neural network, LSTM cell, with char-by-char input</p>
+<p><a href="dnn-bag.html">dnn-word</a> - Deep neural networks with bag-of-words input (not implemented yet)</p>
+<div id="input_length">
+<p class="nn_h2">Input length</p></div>
+<p>Maximum number of chars or embedded words in input sequence.</p>
+<div id="num_layers">
+<p class="nn_h2">Number of layers</p></div>
+<p>The number of hidden levels of the neural network.</p>
+<div id="hidden_size">
+<p class="nn_h2">Hidden size</p></div>
+<p>The size of each hidden level in tge neural network. At moment, only NNs with equal sized levels are used (for it is usual for RNNs).</p>
+<div id="output">
+<p class="nn_h2">Output (labels)</p></div>
+<p>Maximum number of categories, simultaneously the dimension of softmax output level.</p>
+<div id="dropout">
+<p class="nn_h2">Dropout</p></div>
+<p>This is keep probapility used for dropout regularization. If keep probability = 1.0, there is no dropout.</p>
+<div id="learning_rate">
+<p class="nn_h2">Learning rate</p></div>
+<p>This is initial learning rate.</p>
+<div id="lr_decay_start">
+<p class="nn_h2">LR decay st.</p></div>
+<p>This is the number of epoch after which LR decay starts.</p>
+<div id="lr_decay_rate">
+<p class="nn_h2">LR decay</p></div>
+<p>The rate of LR decay according to the formula:</p>
+<div id="number_epochs">
+<p class="nn_h2">Num epochs</p></div>
+<p>The number of training epochs (times of the trainind set of data exposed to the neural network).</p>
+</body>
+</html>

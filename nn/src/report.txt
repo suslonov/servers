@@ -1,0 +1,175 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 1 files
+Detected 22 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: cat_models.py
+--------------------------------------------------------------------------------
+cat_models.py:86:21: ERROR: Using member tf.contrib.learn.preprocessing.ByteProcessor in deprecated module tf.contrib. tf.contrib.learn.preprocessing.ByteProcessor cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+cat_models.py:110:23: ERROR: Using member tf.contrib.learn.preprocessing.ByteProcessor in deprecated module tf.contrib. tf.contrib.learn.preprocessing.ByteProcessor cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+cat_models.py:154:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:155:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+cat_models.py:172:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:173:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:198:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+cat_models.py:319:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:320:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+cat_models.py:329:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:330:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:354:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+cat_models.py:455:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:456:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+cat_models.py:467:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:468:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:492:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+cat_models.py:593:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:594:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+cat_models.py:603:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:604:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+cat_models.py:627:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+================================================================================
+Detailed log follows:
+
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'cat_models.py'
+ outputting to 'cat_models2.py'
+--------------------------------------------------------------------------------
+
+34:11: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+34:11: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+36:18: INFO: Renamed 'tf.string_to_number' to 'tf.strings.to_number'
+37:17: INFO: Added keywords to args of function 'tf.convert_to_tensor'
+65:11: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+65:11: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+67:18: INFO: Renamed 'tf.string_to_number' to 'tf.strings.to_number'
+68:17: INFO: Added keywords to args of function 'tf.convert_to_tensor'
+73:12: INFO: Renamed 'tf.train.range_input_producer' to 'tf.compat.v1.train.range_input_producer'
+86:21: ERROR: Using member tf.contrib.learn.preprocessing.ByteProcessor in deprecated module tf.contrib. tf.contrib.learn.preprocessing.ByteProcessor cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+91:11: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+91:11: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+93:18: INFO: Renamed 'tf.string_to_number' to 'tf.strings.to_number'
+94:17: INFO: Added keywords to args of function 'tf.convert_to_tensor'
+110:23: ERROR: Using member tf.contrib.learn.preprocessing.ByteProcessor in deprecated module tf.contrib. tf.contrib.learn.preprocessing.ByteProcessor cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+115:11: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+115:11: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+117:18: INFO: Renamed 'tf.string_to_number' to 'tf.strings.to_number'
+118:17: INFO: Added keywords to args of function 'tf.convert_to_tensor'
+123:12: INFO: Renamed 'tf.train.range_input_producer' to 'tf.compat.v1.train.range_input_producer'
+142:15: INFO: Renamed 'tf.nn.rnn_cell.GRUCell' to 'tf.compat.v1.nn.rnn_cell.GRUCell'
+142:57: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+144:15: INFO: Renamed 'tf.nn.rnn_cell.BasicLSTMCell' to 'tf.compat.v1.nn.rnn_cell.BasicLSTMCell'
+144:63: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+149:15: INFO: Renamed 'tf.nn.rnn_cell.DropoutWrapper' to 'tf.compat.v1.nn.rnn_cell.DropoutWrapper'
+151:11: INFO: Renamed 'tf.nn.rnn_cell.MultiRNNCell' to 'tf.compat.v1.nn.rnn_cell.MultiRNNCell'
+154:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+154:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+155:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+155:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+158:15: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+161:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+163:21: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+168:19: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+172:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+172:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+173:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+173:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+178:11: INFO: tf.losses.softmax_cross_entropy requires manual check. tf.losses have been replaced with object oriented versions in TF 2.0 and after. The loss function calls have been converted to compat.v1 for backward compatibility. Please update these calls to the TF 2.0 versions.
+178:11: INFO: Renamed 'tf.losses.softmax_cross_entropy' to 'tf.compat.v1.losses.softmax_cross_entropy'
+185:11: INFO: Added keywords to args of function 'tf.argmax'
+187:23: INFO: Added keywords to args of function 'tf.reduce_sum'
+193:12: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+194:38: INFO: Added keywords to args of function 'tf.gradients'
+195:16: INFO: Renamed 'tf.train.GradientDescentOptimizer' to 'tf.compat.v1.train.GradientDescentOptimizer'
+198:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+200:19: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+201:22: INFO: Renamed 'tf.assign' to 'tf.compat.v1.assign'
+308:15: INFO: Renamed 'tf.nn.rnn_cell.GRUCell' to 'tf.compat.v1.nn.rnn_cell.GRUCell'
+308:57: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+310:15: INFO: Renamed 'tf.nn.rnn_cell.BasicLSTMCell' to 'tf.compat.v1.nn.rnn_cell.BasicLSTMCell'
+310:63: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+315:15: INFO: Renamed 'tf.nn.rnn_cell.DropoutWrapper' to 'tf.compat.v1.nn.rnn_cell.DropoutWrapper'
+317:11: INFO: Renamed 'tf.nn.rnn_cell.MultiRNNCell' to 'tf.compat.v1.nn.rnn_cell.MultiRNNCell'
+319:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+319:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+320:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+320:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+323:15: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+325:17: INFO: Renamed 'tf.nn.dynamic_rnn' to 'tf.compat.v1.nn.dynamic_rnn'
+329:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+329:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+330:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+330:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+335:11: INFO: tf.losses.softmax_cross_entropy requires manual check. tf.losses have been replaced with object oriented versions in TF 2.0 and after. The loss function calls have been converted to compat.v1 for backward compatibility. Please update these calls to the TF 2.0 versions.
+335:11: INFO: Renamed 'tf.losses.softmax_cross_entropy' to 'tf.compat.v1.losses.softmax_cross_entropy'
+341:11: INFO: Added keywords to args of function 'tf.argmax'
+343:23: INFO: Added keywords to args of function 'tf.reduce_sum'
+349:12: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+350:38: INFO: Added keywords to args of function 'tf.gradients'
+351:16: INFO: Renamed 'tf.train.GradientDescentOptimizer' to 'tf.compat.v1.train.GradientDescentOptimizer'
+354:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+356:19: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+357:22: INFO: Renamed 'tf.assign' to 'tf.compat.v1.assign'
+444:15: INFO: Renamed 'tf.nn.rnn_cell.GRUCell' to 'tf.compat.v1.nn.rnn_cell.GRUCell'
+444:57: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+446:15: INFO: Renamed 'tf.nn.rnn_cell.BasicLSTMCell' to 'tf.compat.v1.nn.rnn_cell.BasicLSTMCell'
+446:63: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+451:15: INFO: Renamed 'tf.nn.rnn_cell.DropoutWrapper' to 'tf.compat.v1.nn.rnn_cell.DropoutWrapper'
+453:11: INFO: Renamed 'tf.nn.rnn_cell.MultiRNNCell' to 'tf.compat.v1.nn.rnn_cell.MultiRNNCell'
+455:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+455:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+456:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+456:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+459:15: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+461:17: INFO: Renamed 'tf.nn.bidirectional_dynamic_rnn' to 'tf.compat.v1.nn.bidirectional_dynamic_rnn'
+467:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+467:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+468:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+468:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+473:11: INFO: tf.losses.softmax_cross_entropy requires manual check. tf.losses have been replaced with object oriented versions in TF 2.0 and after. The loss function calls have been converted to compat.v1 for backward compatibility. Please update these calls to the TF 2.0 versions.
+473:11: INFO: Renamed 'tf.losses.softmax_cross_entropy' to 'tf.compat.v1.losses.softmax_cross_entropy'
+479:11: INFO: Added keywords to args of function 'tf.argmax'
+481:23: INFO: Added keywords to args of function 'tf.reduce_sum'
+487:12: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+488:38: INFO: Added keywords to args of function 'tf.gradients'
+489:16: INFO: Renamed 'tf.train.GradientDescentOptimizer' to 'tf.compat.v1.train.GradientDescentOptimizer'
+492:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+494:19: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+495:22: INFO: Renamed 'tf.assign' to 'tf.compat.v1.assign'
+582:15: INFO: Renamed 'tf.nn.rnn_cell.GRUCell' to 'tf.compat.v1.nn.rnn_cell.GRUCell'
+582:57: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+584:15: INFO: Renamed 'tf.nn.rnn_cell.BasicLSTMCell' to 'tf.compat.v1.nn.rnn_cell.BasicLSTMCell'
+584:63: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+589:15: INFO: Renamed 'tf.nn.rnn_cell.DropoutWrapper' to 'tf.compat.v1.nn.rnn_cell.DropoutWrapper'
+591:11: INFO: Renamed 'tf.nn.rnn_cell.MultiRNNCell' to 'tf.compat.v1.nn.rnn_cell.MultiRNNCell'
+593:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+593:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+594:13: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+594:13: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+597:15: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+599:17: INFO: Renamed 'tf.nn.dynamic_rnn' to 'tf.compat.v1.nn.dynamic_rnn'
+603:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+603:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+604:16: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+604:16: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+609:11: INFO: tf.losses.softmax_cross_entropy requires manual check. tf.losses have been replaced with object oriented versions in TF 2.0 and after. The loss function calls have been converted to compat.v1 for backward compatibility. Please update these calls to the TF 2.0 versions.
+609:11: INFO: Renamed 'tf.losses.softmax_cross_entropy' to 'tf.compat.v1.losses.softmax_cross_entropy'
+614:9: INFO: Added keywords to args of function 'tf.argmax'
+616:21: INFO: Added keywords to args of function 'tf.reduce_sum'
+622:12: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+623:38: INFO: Added keywords to args of function 'tf.gradients'
+624:16: INFO: Renamed 'tf.train.GradientDescentOptimizer' to 'tf.compat.v1.train.GradientDescentOptimizer'
+627:20: ERROR: Using member tf.contrib.framework.get_or_create_global_step in deprecated module tf.contrib. tf.contrib.framework.get_or_create_global_step cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+629:19: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+630:22: INFO: Renamed 'tf.assign' to 'tf.compat.v1.assign'
+--------------------------------------------------------------------------------
+

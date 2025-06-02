@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#screen -q
+SPRING_APPLICATION_JSON='{"spring":{"profiles":{"active":"prod"}}}' src/moera-node-0.14.0.war

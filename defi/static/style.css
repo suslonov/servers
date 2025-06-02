@@ -1,0 +1,266 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+td {
+	font-family: Arial, Helvetica, sans-serif;
+ 	word-wrap: break-word;
+}
+
+th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.df_h1{
+	font-size: 24px;
+    margin-top: 0px;
+}
+.df_h2{
+	font-size: 22px;
+}
+.linktosource{
+	font-size: 10px;
+	font-style:italic;
+}
+
+.wd_footer_sums{
+	position:absolute;
+	top: 600px;
+	left: 30px;
+	display: table;
+	background-color:#EFEFEF;
+	width: 450px;
+	height:40px;
+}
+.wd_footer_sums1{
+	width:100px;
+	text-align:center;
+	display: table-cell;
+	vertical-align: middle;
+	padding-right: 10px;
+    padding-left: 10px;
+}
+
+.wd_some_text3{
+	position:absolute;
+	font-size: 16px;
+	top: 130px;
+	left: 30px;
+	width: 400px;
+}
+.wd_some_text4{
+	position:absolute;
+	font-size: 16px;
+	top: 230px;
+	left: 30px;
+	width: 400px;
+}
+.wd_some_text5{
+	position:absolute;
+	font-size: 16px;
+	top: 330px;
+	left: 30px;
+	width: 400px;
+}
+.wd_some_text6{
+	position:absolute;
+	font-size: 16px;
+	top: 480px;
+	left: 30px;
+	width: 400px;
+}
+
+.wd_chat_head{
+	position:absolute;
+	font-size: 16px;
+	top: 110px;
+	left: 20px;
+}
+.wd_chat{
+	position:absolute;
+	top: 130px;
+	left: 15px;
+	max-height: 447px;
+	width: 410px;
+	background:#EEEEEE;
+    border-style: solid;
+    border-width: thin;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-radius: 3px;
+}
+.wd_chatlist{
+    -webkit-margin-before: 2px;
+	padding-left: 3px;
+}
+.wd_chatlist_user{
+	list-style-type:none;
+	font-size: 14px;
+	background-color:#D8FFFF;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+	width: 350px;
+	min-height:20px;
+	box-shadow: 3px 3px 5px #888888;
+	border-radius: 3px;
+}
+.wd_chatlist_bot{
+	list-style-type:none;
+	font-size: 14px;
+	background-color:#E3F2E4;
+    padding-top: 5px;
+	padding-bottom: 5px;
+    padding-left: 10px;
+	margin-left: 60px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+	width: 330px;
+	min-height:20px;
+	box-shadow: 3px 3px 5px #888888;
+	border-radius: 3px;
+}
+.wd_chatinput{
+	position:absolute;
+	top: 580px;
+	left: 15px;
+	width: 405px;
+    height: 50px;
+	background-color:#D8FFFF;
+	border-radius: 3px;
+}
+.wd_submitchat{
+	position:absolute;
+	top: 581px;
+	left: 433px;
+	font-size: 16px;
+	font-weight:bold;
+	height: 24px;
+	width: 60px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.wd_cancelchat{
+	position:absolute;
+	top: 610px;
+	left: 433px;
+	font-size: 16px;
+	height: 22px;
+    padding-top: 2px;
+	width: 60px;
+	background:#CCCCCC;
+	text-align:center;
+	border-radius: 3px;
+	text-decoration:none;
+    box-shadow: 1px 1px 5px #888888;
+}
+.wd_cancelchat:visited {
+	color: black;
+}
+
+.wd_testinputheader{
+	font-size: 24px;
+	position:absolute;
+	top: 40px;
+	left: 620px;
+}
+.wd_annpicture{
+	position:absolute;
+	opacity: 0.2;
+	top: 100px;
+	left: 600px;
+}
+.wd_testinputbutton1{
+	position:absolute;
+	top: 130px;
+	left: 620px;
+	font-size: 16px;
+	font-weight:bold;
+	height: 35px;
+	width: 150px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.wd_testinputbutton2{
+	position:absolute;
+	top: 180px;
+	left: 620px;
+	font-size: 16px;
+	font-weight:bold;
+	height: 35px;
+	width: 150px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+
+.wd_inputlabel{
+	position:absolute;
+	font-size: 14px;
+	font-style: italic;
+	font-weight:bold;
+	top: 230px;
+	left: 560px;
+}
+.wd_testinput{
+	position:absolute;
+	top: 250px;
+	left: 560px;
+}
+.wd_submitbutton{
+	position:absolute;
+	top: 250px;
+	left: 920px;
+	font-size: 16px;
+	font-weight:bold;
+	height: 35px;
+	width: 90px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.wd_exampleslabel{
+	position:absolute;
+	font-size: 14px;
+	font-style: italic;
+	font-weight:bold;
+	top: 310px;
+	left: 560px;
+}
+.wd_scrollable{
+	position:absolute;
+	top: 330px;
+	left: 560px;
+	max-height: 400px;
+	width:500px;
+	background:#FFFFFF;
+    overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.wd_callout1{
+	position:absolute;
+	top: 650px;
+	left: 498px;
+}
+.wd_callout2{
+	position:absolute;
+	top: 85px;
+	left: 480px;
+}
+.wd_footer{
+	position:absolute;
+	top: 736px;
+	left: 520px;
+	font-size: 10px;
+	font-style: italic;
+    margin-top: 10px;
+}
+.wd_about{
+	position:absolute;
+	top: 720px;
+	left: 10px;
+    margin-top: 20px;
+	font-weight:bold;
+	color:#990000;
+}

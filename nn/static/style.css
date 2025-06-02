@@ -1,0 +1,56 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+td {
+	font-family: Arial, Helvetica, sans-serif;
+ 	word-wrap: break-word;
+}
+
+th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.nn_h1{
+	font-size: 24px;
+    margin-top: 0px;
+}
+.nn_h2{
+	font-size: 22px;
+}
+.nn_about{
+    margin-top: 20px;
+	font-weight:bold;
+	color:#990000;
+}
+.nn_submitbutton{
+	font-size: 16px;
+	font-weight:bold;
+	height: 35px;
+	width: 98px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.nn_submitbuttonrandom{
+	font-size: 10px;
+	font-weight:bold;
+	height: 20px;
+	width: 98px;
+	vertical-align:middle;
+    box-shadow: 1px 1px 5px #888888;
+}
+.nn_textarea{
+	display:inline-table;
+	vertical-align:middle;
+}
+.nn_scrollable{
+	max-height: 400px;
+    overflow-x: hidden;
+	    overflow-y: auto;
+}
+
+.linktosource{
+	font-size: 10px;
+	font-style:italic;
+}
+	

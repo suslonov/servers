@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql:moeraclub?characterEncoding=UTF-8
+    username: anton
+    password: 
+  flyway:
+    user: anton
+    password: 
+node:
+  address: 159.122.130.246
+  root-secret: 
+  multi: public
+  media:
+    path: /www/moera.club/media
+  registrar:
+    domain: moera.club
+    host: moera.club

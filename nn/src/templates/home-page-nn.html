@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href={{ url_for("static", filename = "style.css") }} />
+<title>Neural Networks for text semantic classification examples</title>
+</head>
+
+<body>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<p class="nn_about"><a href="/static/about.html" target="_blank"><b>Readme</b></a>
+<!-- <table width="400" border="0">
+  <tr>
+    <td><p class="nn_about"><a href="/static/about.html" target="_blank"><b>Readme and guidelines</b></a></p></td>
+    <td><p class="nn_about"><a href="/static/what-to-do.html" target="_blank">Guidelines</a></p></td>  
+  </tr>
+</table>  -->
+<p class="nn_h1">Neural Networks for semantic classification of text : examples</p>
+
+<form name="forminput" id="forminput" method="post" action="{{sub_path}}" onsubmit="check_input()">
+  <p><em>please enter sentence at least slightly related to one or more <strong>categories at the bottom of page</strong>: <a href="/static/about.html#inputideas" target="_blank">(input hints)</a></em></p>
+  <textarea name="sentence" class="nn_textarea" id="nn_sentence" cols="125" rows="2" style="width: 890px;">{{sentence}}</textarea>
+  <input name="Submit" id= "ClassifySubmit" type="submit" class="nn_submitbutton" value="Classify">
+<br>
+	{% if nn_list %}
+<br>
+	  <p><em>please select up to 3 pretrained NN's to classify the sentence above (if you select 4 or more only 3 will be used):    </em>
+	  <input name="Random" id= "MarkRandom" type="button" class="nn_submitbuttonrandom" value="Select random" onclick="random_nn_check()"></p>
+	  <div class="nn_scrollable">
+	  <table border=0>
+		<tr>
+		  <td>&nbsp;</td>
+		  <td><a href="/static/fields_description.html#train_data" target="_blank">Train data</a></td>
+		  <td><a href="/static/fields_description.html#neural_network" target="_blank">Neural network</a></td>
+		  <td><a href="/static/fields_description.html#input_length" target="_blank">Input length</a></td>
+		  <td><a href="/static/fields_description.html#num_layers" target="_blank">Num layers</a></td>
+		  <td><a href="/static/fields_description.html#hidden_size" target="_blank">Hidden size</a></td>
+		  <td><a href="/static/fields_description.html#output" target="_blank">Output (labels)</a></td>
+		  <td><a href="/static/fields_description.html#dropout" target="_blank">Dropout</a></td>
+		  <td><a href="/static/fields_description.html#learning_rate" target="_blank">Learning rate</a></td>
+		  <td><a href="/static/fields_description.html#lr_decay_start" target="_blank">LR decay st.</a></td>
+		  <td><a href="/static/fields_description.html#lr_decay_rate" target="_blank">LR decay</a></td>
+		  <td><a href="/static/fields_description.html#number_epochs" target="_blank">Num epochs</a></td>
+		</tr>
+		{% for nn in nn_list %}
+		<tr>
+			<td>
+				{% if nn[0] in nn_checked_list %}
+					 <input name="nn_{{ nn[0] }}" id="nn_{{ nn[0] }}" type="checkbox" checked>
+				{% else %}
+					  <input name="nn_{{ nn[0] }}" id="nn_{{ nn[0] }}" type="checkbox" > 
+				{% endif %}
+			</td>
+			<td> {{ nn[1][0] }} </td>
+			<td> <a href="/static/{{ nn[1][1] }}.html" target="_blank">{{ nn[1][1] }}</a></td>
+			<td> {{ nn[1][2] }} </td>
+			<td> {{ nn[1][3] }} </td>
+			<td> {{ nn[1][4] }} </td>
+			<td> {{ nn[1][5] }} </td>
+			<td> {{ nn[1][6] }} </td>
+			<td> {{ nn[1][7] }} </td>
+			<td> {{ nn[1][8] }} </td>
+			<td> {{ nn[1][9] }} </td>
+			<td> {{ nn[1][10] }} </td>
+	    </tr>
+		{% endfor %}
+	  </table>
+	  </div>
+	{% endif%}
+</form>
+<br>
+{% if nn_names %}
+<p>Neural network pundits said that the sentence is about: <em>(the name of column is condensed description of NN from the table above, <a href="/static/fields_description.html" target="_blank">see fields</a>)</em></p>
+  <table border=0>
+      <tr>
+		{% for nnm in nn_names %}
+	        <td width="330" bgcolor="#CCCCCC">
+			  <div align="center">{{ nnm }} </div>
+			</td>
+		{% endfor %}
+	  </tr>
+      <tr>
+		{% for nnl in nn_lists %}
+	        <td width="330">
+				{% for nnll in nnl %}
+					{% if nnll[0] > 0.1 %}
+						<p> <span style="font-weight:bold; color:#FF0000">{{nnll[0]}}</span>: {{nnll[1]}}</p>
+					{% elif nnll[0] > 0.01 %}
+						<p> <span style="font-weight:bold; color:#000099">{{nnll[0]}}</span>: {{nnll[1]}}</p>
+					{% else %}
+						<p> {{nnll[0]}}: {{nnll[1]}}</p>
+					{% endif %}
+			{% endfor %}        	</td>
+		{% endfor %}      </tr>
+  </table>
+{% endif%}
+
+{% if catlist %}
+<div style="color:#990000">
+  <p><strong>Categories what NNs can recognize (list for that they was trained):</strong></p>
+  <table border=0>
+    {% for cat in catlist %}
+      <tr>
+        <td><strong> {{ cat[1] }} </strong></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif%}
+
+<script type="text/javascript" language="JavaScript">
+function check_input(){
+	if (document.getElementById("nn_sentence").value==""){
+		alert("please enter sentence!");
+		return false;
+	}
+	var i=0;
+	var t=false;
+	while(true){
+		t = false;
+		try{
+			t = document.getElementById("nn_"+i).checked;
+		}
+		catch(err) {
+			alert("please check at least one model!");
+			return false;
+		}
+		if(t) break;
+		i++;
+	}
+	return true;
+}
+function random_nn_check(){
+	var i=0
+	while(true){
+		try{
+			document.getElementById("nn_"+i).checked = false;
+		}
+		catch(err) {
+			break;
+		}
+		i++;
+	}
+
+	ii = 3
+	while(ii > 0){
+		r = Math.floor(i*Math.random());
+		if (!(document.getElementById("nn_"+r).checked)){
+			document.getElementById("nn_"+r).checked = true;
+			ii--;
+		}
+	}
+}
+
+</script>
+</body>
+</html>
