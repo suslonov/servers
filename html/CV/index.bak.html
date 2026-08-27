@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anton Suslonov — AI, EdTech, Crypto & Options Expert">
+    <title>Anton Suslonov — CV &amp; Portfolio</title>
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.65;
+            color: #1f2937;
+            min-height: 100vh;
+            padding: 0 0 80px;
+            background-color: #ece8df;
+        }
+
+        /* Fixed background — same image as kvasir.pub/index.html */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url('img/city.jpg');
+            background-size: cover;
+            background-position: left top;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 20% 0%,  rgba(247, 247, 237, 0.55), transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(239, 246, 240, 0.45), transparent 70%),
+                linear-gradient(180deg, rgba(247,247,237,0.18) 0%, rgba(247,247,237,0.05) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        a { color: #45110b; }
+
+        .page {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 48px 24px 0;
+        }
+
+        /* ── Hero ───────────────────────────────────────────────────────── */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+        .hero-title-card {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1rem 1.4rem 1.1rem;
+            border-radius: 18px;
+            background: #f7f7ed;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.35);
+        }
+        .hero-name {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            letter-spacing: 0.01em;
+            color: #45110b;
+            line-height: 1.1;
+        }
+        .hero-tagline {
+            margin-top: 0.35rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 0.03em;
+            color: #5a1e15;
+        }
+
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .contact-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #45110b;
+            background: #fefefe;
+            border-radius: 999px;
+            padding: 7px 14px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.16);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .contact-chip:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
+        }
+
+        /* ── Section base ───────────────────────────────────────────────── */
+        section { margin-bottom: 30px; }
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #45110b;
+            margin: 0 0 12px 8px;
+            background: rgba(247, 247, 237, 0.92);
+            padding: 4px 10px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
+        }
+
+        /* ── EdTech Platform (promoted) ────────────────────────────────── */
+        .edtech-frame {
+            background: rgba(247, 247, 237, 0.96);
+            border-radius: 24px;
+            padding: 1.5rem 1.7rem 1.7rem;
+            box-shadow: 0 22px 44px rgba(15, 23, 42, 0.28);
+            position: relative;
+        }
+        .edtech-frame::before {
+            content: 'Live Platform';
+            position: absolute;
+            top: -14px;
+            left: 18px;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #fff;
+            background: #45110b;
+            padding: 5px 12px;
+            border-radius: 6px;
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.28);
+        }
+        .edtech-heading {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #45110b;
+            margin: 0.4rem 0 0.8rem;
+        }
+        .edtech-products {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .edtech-product {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 1.1rem 1.25rem;
+            background: #f7f7ed;
+            border-radius: 0 18px 18px 18px;
+            text-decoration: none;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+        .edtech-product-ribbon {
+            display: inline-flex;
+            align-self: flex-start;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #45110b;
+            background: rgba(239, 246, 240, 0.95);
+            padding: 3px 9px;
+            border-radius: 5px;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.16);
+            margin-bottom: 2px;
+        }
+        .edtech-product.right {
+            background: #eff6f0;
+            border-radius: 18px 0 18px 18px;
+        }
+        .edtech-product:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.28);
+        }
+        .edtech-product-name {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: #45110b;
+        }
+        .edtech-product-desc {
+            font-size: 0.92rem;
+            color: #5d4a44;
+        }
+        .edtech-demo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: #5a1e15;
+            text-decoration: none;
+            border-bottom: 1px solid #c7b9a5;
+            transition: border-color 0.2s;
+        }
+        .edtech-demo:hover { border-color: #45110b; }
+        .edtech-product-shot {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.22);
+            background: #f7f7ed;
+        }
+        .edtech-product-shot img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 16 / 10;
+        }
+
+        @media (max-width: 640px) {
+            .edtech-products { grid-template-columns: 1fr; }
+            .edtech-product, .edtech-product.right {
+                border-radius: 18px;
+            }
+        }
+
+        /* ── Documents (2 major + 1 minor) ─────────────────────────────── */
+        .docs-major {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 640px) {
+            .docs-major { grid-template-columns: 1fr; }
+        }
+        .doc-major {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 1.5rem 1.6rem;
+            background: linear-gradient(135deg, #fef6e7 0%, #f5d9a1 35%, #e8b06f 70%, #c97f3f 100%);
+            border-radius: 18px;
+            text-decoration: none;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .doc-major.cover {
+            background: linear-gradient(135deg, #fff0e5 0%, #f5cab0 35%, #e09077 70%, #a8503a 100%);
+        }
+        .doc-major::after {
+            content: '↗';
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 1.15rem;
+            color: #45110b;
+            opacity: 0.6;
+        }
+        .doc-major:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 40px rgba(15, 23, 42, 0.34);
+        }
+        .doc-major .doc-kind {
+            font-family: 'Courier New', monospace;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #8a3c2f;
+        }
+        .doc-major .doc-title {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #45110b;
+            line-height: 1.3;
+        }
+        .doc-major .doc-meta {
+            font-size: 0.85rem;
+            color: #5d4a44;
+        }
+
+        .doc-minor {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            padding: 0.7rem 1.1rem;
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .doc-minor:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.2);
+        }
+        .doc-minor .doc-line {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .doc-minor .doc-kind {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8a3c2f;
+        }
+        .doc-minor .doc-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.98rem;
+            color: #45110b;
+        }
+        .doc-minor .doc-meta {
+            font-size: 0.78rem;
+            color: #7a6a64;
+        }
+
+        /* ── Generic content card ─────────────────────────────────────── */
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
+            padding: 1.1rem 1.4rem;
+        }
+
+        /* ── Projects / partners list ──────────────────────────────────── */
+        .projects-list,
+        .partners-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .project-item,
+        .partners-list > * {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .project-item a,
+        .partners-list a {
+            font-weight: 600;
+            font-size: 0.98rem;
+            color: #45110b;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .project-item a:hover,
+        .partners-list a:hover { border-color: #45110b; }
+        .project-item .desc {
+            font-size: 0.86rem;
+            color: #5d4a44;
+        }
+
+        /* ── Expertise grid ────────────────────────────────────────────── */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 0;
+        }
+        .expertise-row { display: contents; }
+        .expertise-row:not(:last-child) .expertise-area,
+        .expertise-row:not(:last-child) .expertise-desc {
+            border-bottom: 1px solid #ece4d6;
+        }
+        .expertise-area {
+            padding: 12px 20px 12px 0;
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #45110b;
+        }
+        .expertise-desc {
+            padding: 12px 0;
+            font-size: 0.92rem;
+            color: #3a2a25;
+        }
+
+        @media (max-width: 640px) {
+            .page { padding: 32px 16px 0; }
+            .hero-name { font-size: 1.9rem; }
+            .hero-tagline { font-size: 0.98rem; }
+            .edtech-heading { font-size: 1.2rem; }
+            .expertise-grid { grid-template-columns: 1fr; }
+            .expertise-area {
+                padding: 10px 0 2px;
+                font-size: 0.78rem;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: #8a3c2f;
+            }
+            .expertise-row:not(:last-child) .expertise-area { border-bottom: 0; }
+            .expertise-desc { padding: 0 0 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- ── Hero ───────────────────────────────────────────────────────── -->
+        <header class="hero">
+            <div class="hero-title-card">
+                <div class="hero-name">Anton Suslonov</div>
+                <div class="hero-tagline">AI &amp; ML · LLM · AI Agents · FinTech · Crypto &amp; Options</div>
+            </div>
+            <div class="contact-row">
+                <a class="contact-chip" href="mailto:anton.suslonov@r-synergy.com">✉ anton.suslonov@r-synergy.com</a>
+                <a class="contact-chip" href="https://web.telegram.org/k/#@tToshick">💬 Telegram</a>
+                <a class="contact-chip" href="https://github.com/suslonov">⌨ GitHub</a>
+                <a class="contact-chip" href="https://kvasir.pub/stack.html">My Engineering Stack</a>
+            </div>
+        </header>
+
+        <!-- ── EdTech Platform (promoted, above the fold) ────────────────── -->
+        <section>
+            <h2 class="section-title">EdTech &amp; Entertainment Platform</h2>
+            <div class="edtech-frame">
+                <div class="edtech-heading">Built &amp; shipped — running today</div>
+                <div class="edtech-products">
+                    <a class="edtech-product" href="https://quizly.pub">
+                        <span class="edtech-product-ribbon">Built on kvasir.pub  →</span>
+                        <div class="edtech-product-name">quizly.pub</div>
+                        <div class="edtech-product-desc">AI chat games · Video creation · Tematic live contests</div>
+                    </a>
+                    <div class="edtech-product-shot">
+                        <img src="img/reverse-turing-test-game.jpg" alt="Quizly — reverse Turing test game">
+                    </div>
+                    <a class="edtech-product right" href="https://kvasir.pub">
+                        <div class="edtech-product-name">kvasir.pub</div>
+                        <div class="edtech-product-desc">AI <strong>publishing platform</strong> &mdash; books, courses, AI echo chats</div>
+                    </a>
+                    <div class="edtech-product-shot">
+                        <img src="img/pipeline-simple-editor.jpg" alt="Kvasir — pipeline editor">
+                    </div>
+                </div>
+                <!-- demo video hidden for now -->
+                <!-- <a class="edtech-demo" href="https://youtu.be/38DK1IyehXI">▶ Demo video — youtu.be/38DK1IyehXI</a> -->
+            </div>
+        </section>
+
+        <!-- ── Documents (2 major + 1 minor) ─────────────────────────────── -->
+        <section>
+            <h2 class="section-title">Documents</h2>
+            <div class="docs-major">
+                <a class="doc-major" href="https://drive.google.com/file/d/1w0F2PHBNqProdgfSsiaMx1tBdjfPJiQs/view?usp=drive_link" target="_blank" rel="noopener">
+                    <div class="doc-kind">CV · AI / LLM</div>
+                    <div class="doc-title">Anton Suslonov — AI LLM CV</div>
+                    <div class="doc-meta">Google Drive · PDF</div>
+                </a>
+                <a class="doc-major cover" href="https://drive.google.com/file/d/1L8a3Ih8RTLJSxFYxcqD3T_JFrZMK7bwK/view?usp=drive_link" target="_blank" rel="noopener">
+                    <div class="doc-kind">Letter</div>
+                    <div class="doc-title">Anton Suslonov — Cover Letter</div>
+                    <div class="doc-meta">Google Drive · PDF</div>
+                </a>
+            </div>
+            <a class="doc-minor" href="https://drive.google.com/file/d/1ggzUpnqNKuAtZshfnr9QCOmqVT1g5pSM/view?usp=drive_link" target="_blank" rel="noopener">
+                <div class="doc-line">
+                    <span class="doc-kind">CV · FinTech</span>
+                    <span class="doc-title">Anton Suslonov — FinTech CV</span>
+                </div>
+                <span class="doc-meta">Google Drive · PDF  ↗</span>
+            </a>
+        </section>
+
+        <!-- ── Recent Open Source ────────────────────────────────────────── -->
+        <section>
+            <h2 class="section-title">Recent Open Source</h2>
+            <div class="card">
+                <div class="projects-list">
+                    <div class="project-item">
+                        <a href="https://github.com/suslonov/ai-news-agent">ai-news-agent</a>
+                        <span class="desc">Local scheduled AI-news digest — collects RSS / arXiv / X, dedupes, annotates with Claude, renders HTML</span>
+                    </div>
+                    <div class="project-item">
+                        <a href="https://github.com/suslonov/kvasir_marketing">kvasir_marketing</a>
+                        <span class="desc">AI-driven marketing automation pipeline for the Kvasir platform</span>
+                    </div>
+                    <div class="project-item">
+                        <a href="https://github.com/suslonov/deribit_smile_agent">deribit_smile_agent</a>
+                        <span class="desc">Deribit volatility-smile trading research agent — constructs surfaces, generates options signals, LLM improvement loop (beta)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Expertise ─────────────────────────────────────────────────── -->
+        <section>
+            <h2 class="section-title">Expertise</h2>
+            <div class="card">
+                <div class="expertise-grid">
+                    <div class="expertise-row">
+                        <div class="expertise-area">AI</div>
+                        <div class="expertise-desc">Machine learning, Deep Learning models, and LLM applications (Team lead, Researcher, Developer)</div>
+                    </div>
+                    <div class="expertise-row">
+                        <div class="expertise-area">Startups</div>
+                        <div class="expertise-desc">Project structure, Project economy, Financials, Whitepaper, Presentations</div>
+                    </div>
+                    <div class="expertise-row">
+                        <div class="expertise-area">Cryptocurrency</div>
+                        <div class="expertise-desc">Decentralized systems, Consensus design and implementation, Crypto economy, Trading</div>
+                    </div>
+                    <div class="expertise-row">
+                        <div class="expertise-area">Options</div>
+                        <div class="expertise-desc">Classic stock market and cryptocurrency options, Option math, Volatility trading, Strategies</div>
+                    </div>
+                    <div class="expertise-row">
+                        <div class="expertise-area">DB &amp; Backend</div>
+                        <div class="expertise-desc">Architecture, Implementation, Heterogeneous systems</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Projects ──────────────────────────────────────────────────── -->
+        <section>
+            <h2 class="section-title">Projects</h2>
+            <div class="card">
+                <div class="projects-list">
+                    <div class="project-item">
+                        <a href="http://defi.r-synergy.com/V004/cvi">CVI — VIX-family option volatility index reference calculation for <strong>cvi.finance</strong></a>
+                    </div>
+                    <div class="project-item">
+                        <a href="http://strategy.r-synergy.com/mev-bribes-monitor">MEV bribes monitor</a>
+                    </div>
+                    <div class="project-item">
+                        <a href="https://drive.google.com/file/d/1x0ItRmzZafRstuIkY8iWSqkb6zcQw6ra/view?usp=sharing">Blockchain ID</a>
+                    </div>
+                    <div class="project-item">
+                        <a href="https://github.com/suslonov/deribit_traders">Deribit automated trader</a>
+                    </div>
+                    <div class="project-item">
+                        <a href="https://gpt.r-synergy.com/">Family chatGPT</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Partners ──────────────────────────────────────────────────── -->
+        <section>
+            <h2 class="section-title">Partners</h2>
+            <div class="card">
+                <div class="partners-list">
+                    <a href="http://www.moera.club/intro/">Moera decentralized network</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
