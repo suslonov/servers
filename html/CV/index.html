@@ -39,47 +39,6 @@
       font: 16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    /*
-      The illustration is deliberately a real page background, not an <img>.
-      It occupies the unused right side on desktop; the readable CV stays on the left.
-      On narrower screens it fades down instead of colliding with the text.
-    */
-    body::before {
-      content: "";
-      position: fixed;
-      z-index: 0;
-      pointer-events: none;
-
-      /*
-        IMPORTANT: the whole portrait illustration must remain visible.
-        `contain` scales by BOTH width and height, so the bottom
-        "Create real value" stage can never be cropped by the viewport.
-      */
-      top: 14px;
-      right: 18px;
-      bottom: 14px;
-      width: min(46vw, 720px);
-      background-image: url("img/agentic-ai-background.jpg");
-      background-repeat: no-repeat;
-      background-position: right center;
-      background-size: contain;
-      opacity: 0.94;
-      filter: saturate(0.92) contrast(0.98);
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      z-index: 0;
-      pointer-events: none;
-      inset: 0;
-      background: linear-gradient(90deg,
-        rgba(251, 251, 248, 0) 0%,
-        rgba(251, 251, 248, 0) 45%,
-        rgba(251, 251, 248, 0.10) 51%,
-        rgba(251, 251, 248, 0) 68%);
-    }
-
     a { color: inherit; }
 
     .shell {
@@ -279,7 +238,8 @@
 
     .platform-copy .status.blue { color: var(--blue); }
 
-    .platform-copy h3 {
+    .platform-copy h3,
+    .working-on h3 {
       margin: 0 0 8px;
       color: #16345f;
       font: 700 1.25rem/1.2 Georgia, "Times New Roman", serif;
@@ -292,7 +252,8 @@
       font: 700 .70em/1 Inter, ui-sans-serif, system-ui, sans-serif;
     }
 
-    .platform-copy p {
+    .platform-copy p,
+    .working-on-grid p {
       margin: 0;
       color: #5e6f86;
       font-size: .89rem;
@@ -321,16 +282,54 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
     }
 
-    /* Documents: two primary documents, one secondary document below. */
-    .docs-major {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 10px;
+    .working-on {
+      grid-column: 1 / -1;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.78);
     }
 
-    .doc-major,
-    .doc-minor {
+    .working-on h3 {
+      margin-bottom: 14px;
+      color: var(--orange);
+      font-size: 1.5rem;
+    }
+
+    .working-on-grid p { font-size: 1rem; }
+
+    .working-on-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1.35fr .9fr .9fr;
+      column-gap: 32px;
+      row-gap: 16px;
+      align-items: start;
+      min-height: 180px;
+    }
+
+    .working-on-image {
+      display: block;
+      height: 180px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .working-on-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top center;
+    }
+
+    /* Documents: three cards in one row. */
+    .docs-major {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .doc-major {
       position: relative;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.80);
@@ -341,7 +340,7 @@
     }
 
     .doc-major {
-      min-height: 154px;
+      /* min-height: 154px; */
       padding: 20px;
       border-radius: 18px;
     }
@@ -358,8 +357,7 @@
         rgba(255,255,255,.80);
     }
 
-    .doc-major::after,
-    .doc-minor::after {
+    .doc-major::after {
       content: "↗";
       position: absolute;
       color: var(--blue);
@@ -372,8 +370,7 @@
       font-size: 1rem;
     }
 
-    .doc-major:hover,
-    .doc-minor:hover {
+    .doc-major:hover {
       transform: translateY(-2px);
       border-color: rgba(29,99,213,.28);
       background-color: rgba(255,255,255,.95);
@@ -404,41 +401,6 @@
       color: #72829a;
       font-size: .78rem;
       font-weight: 600;
-    }
-
-    .doc-minor {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 12px;
-      min-height: 66px;
-      padding: 13px 44px 13px 16px;
-      border-radius: 15px;
-    }
-
-    .doc-minor::after {
-      top: 50%;
-      right: 17px;
-      transform: translateY(-50%);
-      font-size: .92rem;
-    }
-
-    .doc-minor .doc-kind {
-      margin: 0;
-      padding: 0;
-      white-space: nowrap;
-      color: var(--blue);
-    }
-
-    .doc-minor .doc-title {
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-      font-size: .91rem;
-      font-weight: 760;
-    }
-
-    .doc-minor .doc-meta {
-      margin: 0;
-      white-space: nowrap;
     }
 
     .list-card {
@@ -503,32 +465,21 @@
       font-size: .78rem;
     }
 
-    .mobile-art {
-      display: none;
+
+    @media (min-width: 861px) {
+      .hero,
+      .section {
+        width: 130%;
+        max-width: calc(100vw - clamp(28px, 5vw, 88px) - 28px);
+      }
     }
 
     @media (max-width: 1180px) {
       :root { --content: 700px; }
 
-      body::before {
-        right: 10px;
-        width: min(43vw, 610px);
-        opacity: .62;
-      }
-
-      body::after {
-        background: linear-gradient(90deg,
-          var(--paper) 0%,
-          rgba(251,251,248,.94) 47%,
-          rgba(251,251,248,.46) 69%,
-          rgba(251,251,248,.06) 100%);
-      }
     }
 
     @media (max-width: 860px) {
-      body::before,
-      body::after { display: none; }
-
       .shell {
         width: min(680px, calc(100% - 32px));
         margin: 0 auto;
@@ -537,52 +488,148 @@
 
       h1 { font-size: clamp(2.8rem, 14vw, 4.8rem); }
 
-      .mobile-art {
-        display: block;
-        width: 100%;
-
-        /* Portrait source is approximately 2:3. Keeping the aspect ratio
-           makes the ENTIRE composition visible, including its bottom stage. */
-        aspect-ratio: 2 / 3;
-        height: auto;
-        margin: 18px 0 4px;
-        border-radius: 18px;
-        background-image: url("img/agentic-ai-background.jpg");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        background-color: rgba(255,255,255,.42);
-        border: 1px solid rgba(24, 71, 132, 0.08);
-      }
 
       .platform-matrix { grid-template-columns: 1fr 1fr; }
       .platform-copy, .platform-shot { min-height: 190px; }
       .platform-shot img { min-height: 190px; }
-      .docs-major { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 620px) {
-      .shell { width: min(100% - 24px, 620px); }
-      .section { padding-top: 28px; }
-      .section-head { display: block; }
-      .section-note { margin-top: 5px; }
-
-      .platform-frame { padding: 9px; }
-      .platform-matrix { grid-template-columns: 1fr; }
-      .platform-copy, .platform-shot { min-height: 0; }
-      .platform-copy { padding: 17px; }
-      .platform-shot { aspect-ratio: 16 / 10; }
-      .platform-shot img { min-height: 0; aspect-ratio: 16 / 10; }
-
-      .docs-major { grid-template-columns: 1fr; }
-      .doc-major { min-height: 132px; }
-      .doc-minor {
-        grid-template-columns: 1fr;
-        gap: 3px;
-        padding: 14px 42px 14px 16px;
+      .shell {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 16px);
+        margin: 0 auto;
+        padding: 18px 0 56px;
       }
-      .doc-minor .doc-kind { margin-bottom: 3px; }
-      .doc-minor .doc-meta { white-space: normal; }
+
+      .hero { display: contents; }
+
+      .hero-intro {
+        order: 1;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      #documents { order: 2; }
+      #platform { order: 3; }
+      #opensource { order: 5; }
+      #expertise { order: 6; }
+      #projects { order: 7; }
+      #partners { order: 8; }
+      footer { order: 9; }
+
+      .section { padding-top: 20px; }
+      .section-head { display: block; margin-bottom: 10px; }
+      .section-note { margin-top: 4px; }
+      h2 { font-size: 1.28rem; }
+
+      #documents {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        padding-top: 4px;
+      }
+      #documents .section-head {
+        flex: 1 0 100%;
+        margin-bottom: 2px;
+      }
+      .docs-major {
+        display: contents;
+        margin-bottom: 0;
+      }
+      .doc-major {
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+        min-height: 36px;
+        padding: 6px 28px 6px 11px;
+        border-radius: 999px;
+      }
+      .doc-kind {
+        margin: 0;
+        padding: 0;
+        font-size: .68rem;
+        letter-spacing: .06em;
+      }
+      .doc-title,
+      .doc-meta { display: none; }
+      .doc-major::after {
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        font-size: .78rem;
+      }
+
+      .platform-frame { padding: 6px; border-radius: 14px; }
+      .platform-kicker { margin: 2px 0 8px 2px; }
+      .platform-matrix {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .platform-matrix > div { display: contents; }
+      .platform-matrix > .platform-shot:first-of-type { order: 1; }
+      .platform-matrix > .platform-shot:last-of-type { order: 2; }
+      .platform-matrix > div > .platform-copy:first-child { order: 3; }
+      .platform-matrix > .platform-copy { order: 4; }
+      .platform-matrix > div > .platform-copy:last-child {
+        order: 5;
+        grid-column: 1 / -1;
+      }
+
+      .platform-copy,
+      .platform-shot { min-height: 0; }
+      .platform-copy {
+        padding: 6px 2px 4px;
+        justify-content: flex-start;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .platform-copy:hover {
+        transform: none;
+        background: transparent;
+      }
+      .platform-copy .status { display: none; }
+      .platform-copy h3 { margin-bottom: 0; font-size: .95rem; }
+      .platform-copy p { display: none; }
+      .platform-matrix > div > .platform-copy:last-child {
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255,255,255,.78);
+        box-shadow: var(--shadow);
+      }
+      .platform-matrix > div > .platform-copy:last-child:hover {
+        transform: translateY(-1px);
+        background: rgba(255,255,255,.94);
+      }
+      .platform-matrix > div > .platform-copy:last-child p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-top: 4px;
+        font-size: .78rem;
+        line-height: 1.4;
+      }
+      .platform-shot { aspect-ratio: 5 / 4; }
+      .platform-shot img {
+        min-height: 0;
+        height: 100%;
+        aspect-ratio: 5 / 4;
+        object-fit: cover;
+      }
+
+      .working-on { order: 6; padding: 14px; }
+      .working-on h3 { font-size: 1.2rem; }
+      .working-on-grid p { font-size: .9rem; line-height: 1.5; }
+      .working-on-grid { grid-template-columns: 1.15fr 1fr; column-gap: 24px; row-gap: 16px; align-items: start; }
+      .working-on-image { height: 150px; }
+
 
       .expertise-grid { grid-template-columns: 1fr; }
       .expertise { min-height: 0; }
@@ -606,43 +653,65 @@
 <body>
   <main class="shell">
     <header class="hero">
-      <div class="eyebrow">CV / Portfolio</div>
-      <h1>Anton Suslonov</h1>
-      <p class="tagline">AI &amp; ML · LLM · AI Agents · FinTech · Crypto &amp; Options</p>
+      <div class="hero-intro">
+        <div class="eyebrow">CV / Portfolio</div>
+        <h1>Anton Suslonov</h1>
+        <p class="tagline">AI Systems · LLM &amp; Agents · Machine Learning · Backend Architecture · FinTech</p>
 
-      <div class="contacts" aria-label="Contact links">
-        <a class="chip" href="mailto:anton.suslonov@r-synergy.com">✉ anton.suslonov@r-synergy.com</a>
-        <a class="chip" href="https://web.telegram.org/k/" target="_blank" rel="noopener">Telegram</a>
-        <a class="chip" href="https://github.com/suslonov" target="_blank" rel="noopener">GitHub</a>
-        <a class="chip" href="https://kvasir.pub/stack.html" target="_blank" rel="noopener">My Engineering Stack</a>
+        <div class="contacts" aria-label="Contact links">
+          <a class="chip" href="mailto:anton.suslonov@r-synergy.com">✉ anton.suslonov@r-synergy.com</a>
+          <a class="chip" href="https://t.me/Toshick" target="_blank" rel="noopener">Telegram</a>
+          <a class="chip" href="https://github.com/suslonov" target="_blank" rel="noopener">GitHub</a>
+          <a class="chip" href="https://kvasir.pub/stack.html" target="_blank" rel="noopener">My Engineering Stack</a>
+        </div>
       </div>
 
-      <div class="mobile-art" role="img" aria-label="Agentic AI from talk and demos to real value"></div>
     </header>
 
     <section class="section" id="platform">
       <div class="section-head">
-        <h2>EdTech &amp; Entertainment Platform</h2>
+        <h2>AI Platforms &amp; Products</h2>
         <p class="section-note">Built &amp; shipped — running today</p>
       </div>
 
       <div class="platform-frame">
         <div class="platform-kicker">Live platform</div>
         <div class="platform-matrix">
-          <a class="platform-copy" href="https://quizly.pub/" target="_blank" rel="noopener">
-            <span class="status">Built on kvasir.pub</span>
-            <h3>quizly.pub</h3>
-            <p>AI-powered edutainment: chat and video contests, generated quizzes, daily polls, and interactive AI games. The lighter public-facing product built on Kvasir.</p>
-          </a>
-
+          <div>
+            <a class="platform-copy" href="https://quizly.pub/" target="_blank" rel="noopener">
+              <span class="status">Built on kvasir.pub</span>
+              <h3>quizly.pub</h3>
+              <p>AI-powered edutainment: chat and video contests, generated quizzes, daily polls, and interactive AI games. The lighter public-facing product built on Kvasir.</p>
+            </a>
+            <a class="platform-copy" href="https://kvasir.pub/exams" target="_blank" rel="noopener">
+              <span class="status">Built on kvasir.pub</span>
+              <h3>Kvasir Exam</h3>
+              <p>AI-assisted grading with OCR, handwriting recognition and class-wide batch processing.</p>
+            </a>
+          </div>
+        
           <a class="platform-shot" href="https://quizly.pub/" target="_blank" rel="noopener" aria-label="Quizly — reverse Turing test game">
             <img src="img/reverse-turing-test-game.jpg" alt="Quizly — reverse Turing test game">
           </a>
 
+          <section class="working-on" aria-labelledby="working-on-title">
+            <h3 id="working-on-title">working on</h3>
+            <div class="working-on-grid">
+              <p>Human feedback loop for Kvasir Exam to refine AI-origin assessment through prompt optimization. A little similar to RLHF, but just on system prompts.</p>
+              <a class="working-on-image" href="img/prompt%20optimisation%20flow.png" target="_blank" rel="noopener" aria-label="Open the prompt optimization workflow diagram">
+                <img src="img/prompt%20optimisation%20flow.png" alt="Human feedback, prompt optimization, backtesting and approval workflow for Kvasir Exam">
+              </a>
+              <p>Mobile quick-scan application for Kvasir Exam for teachers</p>
+              <a class="working-on-image" href="img/witch%20scanning.png" target="_blank" rel="noopener" aria-label="Open the mobile quick-scan illustration">
+                <img src="img/witch%20scanning.png" alt="Witch demonstrating the mobile quick-scan application">
+              </a>
+            </div>
+          </section>
+
           <a class="platform-copy" href="https://kvasir.pub/" target="_blank" rel="noopener">
-            <span class="status blue">AI publishing platform</span>
+            <span class="status blue">AI-native application platform</span>
             <h3>kvasir.pub</h3>
-            <p>Mature AI publishing and reading platform for books, courses, and persistent AI assistants, with RAG, content pipelines, AI chats, and a multi-provider model layer.</p>
+            <p>Production platform for books, online courses, and persistent AI assistants, with RAG, content pipelines, AI chats, and a multi-provider model layer.</p>
           </a>
 
           <a class="platform-shot" href="https://kvasir.pub/" target="_blank" rel="noopener" aria-label="Kvasir — pipeline editor">
@@ -655,28 +724,24 @@
     <section class="section" id="documents">
       <div class="section-head">
         <h2>Documents</h2>
-        <p class="section-note">Google Drive · PDF</p>
       </div>
 
       <div class="docs-major">
-        <a class="doc-major primary" href="https://drive.google.com/file/d/1w0F2PHBNqProdgfSsiaMx1tBdjfPJiQs/view?usp=drive_link" target="_blank" rel="noopener">
+        <a class="doc-major primary" href="https://drive.google.com/file/d/1nTvPyN_ePiSnLdUiPRUWbE277OhjyKuu/view?usp=drive_link" target="_blank" rel="noopener">
           <span class="doc-kind">CV · AI / LLM</span>
           <strong class="doc-title">Anton Suslonov — AI / LLM CV</strong>
-          <span class="doc-meta">Google Drive · PDF</span>
         </a>
 
         <a class="doc-major letter" href="https://drive.google.com/file/d/1L8a3Ih8RTLJSxFYxcqD3T_JFrZMK7bwK/view?usp=drive_link" target="_blank" rel="noopener">
           <span class="doc-kind">Letter</span>
           <strong class="doc-title">Anton Suslonov — Cover Letter</strong>
-          <span class="doc-meta">Google Drive · PDF</span>
+        </a>
+
+        <a class="doc-major" href="https://drive.google.com/file/d/1ggzUpnqNKuAtZshfnr9QCOmqVT1g5pSM/view?usp=drive_link" target="_blank" rel="noopener">
+          <span class="doc-kind">CV · FinTech</span>
+          <strong class="doc-title">Anton Suslonov — FinTech CV</strong>
         </a>
       </div>
-
-      <a class="doc-minor" href="https://drive.google.com/file/d/1ggzUpnqNKuAtZshfnr9QCOmqVT1g5pSM/view?usp=drive_link" target="_blank" rel="noopener">
-        <span class="doc-kind">CV · FinTech</span>
-        <strong class="doc-title">Anton Suslonov — FinTech CV</strong>
-        <span class="doc-meta">Google Drive · PDF</span>
-      </a>
     </section>
 
     <section class="section" id="opensource">
